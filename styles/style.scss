@@ -12,6 +12,7 @@ $color-key-hover: mix($color-hover-a, $color-hover-b, 87%);
 $color-key-active: mix($color-active-a, $color-active-b, 87%);
 $color-keyboard: mix($color-white, $color-black, 12%);
 $color-text: $color-black;
+$play: #38FD95;
 
 $key-radius: 4px;
 $key-size: 64px;
@@ -20,8 +21,30 @@ $key-spacing-horizontal: 9px;
 $key-spacing-vertical: 5px;
 $keyboard-spacing: 16px;
 
+// *{
+//   margin: 0;
+//   padding: 0;
+// }
+
 body{
     background-color: black;
+}
+
+header{
+  display: flex;
+  justify-content: space-between;
+}
+
+.playPause{
+  background-color: $play;
+  border-radius: 40px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  margin: 10px;
+  &:hover{
+    cursor: pointer;
+  }
 }
 
 .keyboard-container{
@@ -164,6 +187,7 @@ body{
     img{
         width: 100%;
         padding: 10px;
+        box-sizing: border-box;
     }
 }
 
@@ -172,4 +196,14 @@ body{
     color: $color-white;
     text-align: center;
     font-family: Arial, Helvetica, sans-serif;
+    input{
+      background-color: transparent;
+      width: 100%;
+      padding: 0;
+      margin: 0;
+      font-size: 3em;
+      text-align: center;
+      color: white;
+      border: none;
+    }
 }
