@@ -1,3 +1,6 @@
+//sass --watch --style compressed style.scss:style.css
+//sass --style compressed style.scss style.css
+
 $color-black: #555;
 $color-white: #fff;
 
@@ -13,6 +16,9 @@ $color-key-active: mix($color-active-a, $color-active-b, 87%);
 $color-keyboard: mix($color-white, $color-black, 12%);
 $color-text: $color-black;
 $play: #38FD95;
+$playHover: #2ABD6E;
+$playing: #FF5E52;
+$playingHover: #CC4B41;
 
 $key-radius: 4px;
 $key-size: 64px;
@@ -42,8 +48,19 @@ header{
   height: 50px;
   text-align: center;
   margin: 10px;
+  i{
+    padding: 0;
+  }
   &:hover{
     cursor: pointer;
+    background-color: $playHover;
+  }
+}
+
+.playing{
+  background-color: $playing !important;
+  &:hover{
+    background-color: $playingHover !important;
   }
 }
 
