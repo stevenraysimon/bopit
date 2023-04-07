@@ -223,4 +223,9 @@ header{
       color: white;
       border: none;
     }
-}
+  }
+
+  .keyPressed{
+    color: $color-white !important;
+    background-color: $color-key-active !important;
+  }

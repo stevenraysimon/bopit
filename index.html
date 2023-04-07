@@ -19,7 +19,7 @@
     </div>
   </header>
   <div class="display">
-    <input placeholder="Text" />
+    <input placeholder="Text" id="input" />
   </div>
   <div class="keyboard-container">
     <div class="keyboard">
@@ -76,7 +76,7 @@
         <div class="key__top">+</div>
         <div class="key__bottom">=</div>
       </div>
-      <div class="key is-backspace">
+      <div class="key is-backspace" id="backspace">
         <div class="key__bottom">&larr;</div>
       </div>
       <!-- Second row -->
@@ -106,7 +106,7 @@
         <div class="key__bottom"></div>
       </div>
       <!-- Third row -->
-      <div class="key is-capslock"></div>
+      <div class="key is-capslock" id="capslock"></div>
       <div class="key">A</div>
       <div class="key">S</div>
       <div class="key">D</div>
@@ -129,7 +129,7 @@
         <div class="key__bottom">\</div>
       </div>
       <!-- Fourth row -->
-      <div class="key is-shift-left"></div>
+      <div class="key is-shift-left" id="shift-left"></div>
       <div class="key">
         <div class="key__top">~</div>
         <div class="key__bottom">`</div>
@@ -153,7 +153,7 @@
         <div class="key__top">?</div>
         <div class="key__bottom">/</div>
       </div>
-      <div class="key is-shift-right"></div>
+      <div class="key is-shift-right" id="shift-right"></div>
       <!-- Fifth row -->
       <div class="key is-left">
         <div class="key__bottom">fn</div>
@@ -166,11 +166,11 @@
         <div class="key__bottom">option</div>
       </div>
       <div class="key is-command is-right">
-        <div class="key__bottom">command</div>
+        <div class="key__bottom" id="command-right">command</div>
       </div>
-      <div class="key is-space"></div>
+      <div class="key is-space" id="space"></div>
       <div class="key is-command is-left">
-        <div class="key__bottom">command</div>
+        <div class="key__bottom" id="command-left">command</div>
       </div>
       <div class="key is-left">
         <div class="key__top">alt</div>
