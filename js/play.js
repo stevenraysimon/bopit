@@ -6,19 +6,83 @@ document.addEventListener("DOMContentLoaded", () => {
     //Play and pause
     document.querySelector('.playPause').setAttribute('id', 'playPause');
     let playing = false;
+
     document.querySelector('.playPause').addEventListener('click', function(){
         if (playing === false){
+
             document.getElementById('playPause').classList.add('playing');
             document.getElementById('play').classList.remove('fa-play')
             document.getElementById('play').classList.add('fa-stop');
             playing = true;
+            play();
+            getRandomWord();
+
         } else{
+
             document.getElementById('playPause').classList.remove('playing');
             document.getElementById('play').classList.remove('fa-stop')
             document.getElementById('play').classList.add('fa-play');
             playing = false;
+            play();
+
         }
     });//click playPause
+
+    function getRandomWord(){
+
+        //Words to match
+        var dictionary = ['One', 'Two', 'Three'];
+
+        //Get a random number
+        let randomWord = dictionary[Math.floor(Math.random() * dictionary.length)];
+
+        return randomWord;
+    }
+
+    var game;
+
+    //Game
+    function play(){
+
+
+        //Set a new word to be the placeholder
+        document.getElementById('input').placeholder= getRandomWord();
+
+        //Set timer
+        var time = 5000;
+
+        //Check game status
+        if (playing == true){
+            //Run game loop
+            game = setInterval(() => {
+                console.log('Playing');
+            }, time);
+
+            //requestAnimationFrame(play);
+
+            //Play music 
+
+            //Run timer
+
+            //Check if word matches input
+
+            //If timer runs out before word match, end game
+
+            //If matches, next word
+
+
+        } else{
+
+            //cancelAnimationFrame(play);
+            console.log('Stopped');
+
+            //Reset a new word to be the placeholder
+            document.getElementById('input').placeholder='Text';
+
+            //Clear loop
+            clearInterval(game);
+        }
+    }
 
     //Set up ids
     function setIds(){
