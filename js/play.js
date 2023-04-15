@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('play').classList.remove('fa-play')
             document.getElementById('play').classList.add('fa-stop');
             playing = true;
-            play();
+            playGame();
             getRandomWord();
 
         } else{
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('play').classList.remove('fa-stop')
             document.getElementById('play').classList.add('fa-play');
             playing = false;
-            play();
+            playGame();
 
         }
     });//click playPause
@@ -39,10 +39,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return randomWord;
     }
 
-    var game;
+    var game, showTime, score;
+    var setTimeShowTime = 1;
 
     //Game
-    function play(){
+    function playGame(){
 
 
         //Set a new word to be the placeholder
@@ -50,13 +51,76 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Set timer
         var time = 5000;
+        document.getElementById("beat").play();
+        document.getElementById("beat").loop = true;
+
+        //Set timer display
+        timeShowTime = setTimeShowTime;
+        score = 0;
+
+        //Playing
+        console.log('Playing');
+
+        //Open the input field
+        //Set keypress to return false
 
         //Check game status
         if (playing == true){
             //Run game loop
             game = setInterval(() => {
+                //Playing
                 console.log('Playing');
             }, time);
+
+            showTime = setInterval(() => {
+                //Playing
+                document.getElementById("timer").innerHTML = timeShowTime;
+                if (timeShowTime == 0){
+                    
+                    if(document.getElementById('input').placeholder === document.getElementById('input').value){
+                        //If Win ********************************************
+                        timeShowTime = setTimeShowTime;
+                        score++;
+                        //Set a new word to be the placeholder
+                        document.getElementById('input').placeholder= getRandomWord();
+                        //Update score
+                        document.getElementById("score").innerHTML = score;
+                        //Clear input
+                        document.getElementById('input').value = '';
+                    } else{
+                        //If Lose ********************************************
+                        console.log('Stopped');
+                        document.getElementById("beat").pause();
+                        document.getElementById("beat").currentTime = 0;
+
+                        //Clear timer
+                        timeShowTime = 0;
+                        document.getElementById("timer").innerHTML = timeShowTime;
+
+                        //Reset a new word to be the placeholder
+                        document.getElementById('input').placeholder='Text';
+
+                        //Clear loop
+                        clearInterval(game);
+                        clearInterval(showTime);
+
+                        //Reset input
+                        document.getElementById('input').value = '';
+                        document.getElementById('input').placeholder='Text';
+
+                        //Reset play button
+                        playing = false;
+                        document.getElementById('playPause').classList.remove('playing');
+                        document.getElementById('play').classList.remove('fa-stop')
+                        document.getElementById('play').classList.add('fa-play');
+
+                        //Disable the input field
+                        //Set keypress to return true
+                    }
+                } else{
+                    timeShowTime--;
+                }
+            }, 1000);
 
             //requestAnimationFrame(play);
 
@@ -75,12 +139,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
             //cancelAnimationFrame(play);
             console.log('Stopped');
+            document.getElementById("beat").pause();
+            document.getElementById("beat").currentTime = 0;
+
+            //Clear timer
+            timeShowTime = 0;
+            document.getElementById("timer").innerHTML = timeShowTime;
 
             //Reset a new word to be the placeholder
-            document.getElementById('input').placeholder='Text';
+            document.getElementById('input').placeholder='Text'; 
+            document.getElementById('input').value = '';
 
             //Clear loop
             clearInterval(game);
+            clearInterval(showTime);
+
+            //Disable the input field
+            //Set keypress to return false
         }
     }
 

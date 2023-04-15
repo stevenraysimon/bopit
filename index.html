@@ -8,14 +8,21 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
   <link href="styles/style.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/font-awesome.min.css"/>
+  <audio id="beat" src="sounds/beat.mp3"></audio>
 </head>
 <body>
   <header>
-    <div class="logo">
-      <img src="images/logo.png" />
+    <div class="header-items">
+        <div class="logo">
+          <img src="images/logo.png" />
+        </div>
+        <h6>Score: <span id="score">0</span></h6>
     </div>
-    <div class="playPause">
-      <p><i id="play" class="fa fa-play"></i></p>
+    <div class="header-items">
+        <h6>Timer: <span id="timer">0</span> sec</h6>
+        <div class="playPause">
+          <p><i id="play" class="fa fa-play"></i></p>
+        </div>
     </div>
   </header>
   <div class="display">
