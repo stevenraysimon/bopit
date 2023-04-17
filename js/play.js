@@ -79,10 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function getRandomWord(){
 
-        //Words to match
-        var dictionary = ['One', 'Two', 'Three'];
-
-        //Get a random number
+        //Get a random number for dictionary.js
         let randomWord = dictionary[Math.floor(Math.random() * dictionary.length)];
 
         return randomWord;
