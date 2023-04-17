@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", () => {
             //Set speed and play
             if(document.getElementById('easy').checked){
                 document.querySelector('.modal').style.display = 'none';
-                setTimeShowTime = 5;
+                setTimeShowTime = 8;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 getRandomWord();
             } else if(document.getElementById('medium').checked){
                 document.querySelector('.modal').style.display = 'none';
-                setTimeShowTime = 3;
+                setTimeShowTime = 5;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
@@ -64,7 +64,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 getRandomWord();
             } else if(document.getElementById('hard').checked){
                 document.querySelector('.modal').style.display = 'none';
-                setTimeShowTime = 1;
+                setTimeShowTime = 3;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
