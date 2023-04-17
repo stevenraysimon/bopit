@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('input').value = '';
             document.getElementById('input').placeholder='Get Ready...';
             playGame();
-            getRandomWord();
 
         } else{
 
@@ -39,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function modals(){
         //Level selected and hide modal
         document.getElementById('submit').addEventListener('click', function(){
-
             //Reset score
             score = 0;
 
@@ -52,7 +50,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
-                getRandomWord();
             } else if(document.getElementById('medium').checked){
                 document.querySelector('.modal').style.display = 'none';
                 setTimeShowTime = 5;
@@ -61,7 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
-                getRandomWord();
             } else if(document.getElementById('hard').checked){
                 document.querySelector('.modal').style.display = 'none';
                 setTimeShowTime = 3;
@@ -70,29 +66,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
-                getRandomWord();
             }
         });
-
-        //On lose show modal
     }
 
     function getRandomWord(){
 
         //Get a random number for dictionary.js
         let randomWord = dictionary[Math.floor(Math.random() * dictionary.length)];
-
         return randomWord;
-    }//getRandomWord
 
-    //Set Hard 1, Medium 3, Easy 5
+    }//getRandomWord
 
     //Game
     function playGame(){
 
+        var setWord = getRandomWord();
+
 
         //Set a new word to be the placeholder
-        document.getElementById('input').placeholder= getRandomWord();
+        document.getElementById('input').placeholder= setWord;
+        //Show word
+        document.getElementById('word').innerHTML = setWord;
 
         //Set timer
         document.getElementById("beat").play();
@@ -120,7 +115,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             //Run game loop
             showTime = setInterval(() => {
+
                 //Playing
+                setWord = getRandomWord();
+
                 document.getElementById("timer").innerHTML = timeShowTime;
                 if (timeShowTime == 0){
                     
@@ -129,7 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         timeShowTime = setTimeShowTime;
                         score++;
                         //Set a new word to be the placeholder
-                        document.getElementById('input').placeholder= getRandomWord();
+                        document.getElementById('input').placeholder= setWord;
+                        //Show word
+                        document.getElementById('word').innerHTML = setWord;
                         //Update score
                         document.getElementById("score1").innerHTML = score;
                         document.getElementById("score2").innerHTML = score;
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("timer").innerHTML = timeShowTime;
 
                         //Hide word
-                        document.getElementById('word').style.display = 'none';
+                        //document.getElementById('word').style.display = 'none';
 
                         //Clear loop
                         clearInterval(showTime);
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('input').value = '';
 
             //Hide word
-            document.getElementById('word').style.display = 'none';
+            //document.getElementById('word').style.display = 'none';
 
             //Clear loop
             clearInterval(showTime);
@@ -239,14 +239,14 @@ document.addEventListener("DOMContentLoaded", () => {
         //Keyboard Lights
         document.getElementById(`${name}`).classList.add('keyPressed');
 
-        //Update and show word at top
-        headerWord();
-
         if (name != 'capslock'){
             setTimeout(function(){
                 document.getElementById(`${name}`).classList.remove('keyPressed');
             }, 100);
         }
+
+        //Update and show word at top
+        headerWord();
 
         //alert(`Key pressed ${name} \r\n Key code value: ${code}`);
     }, false);
@@ -255,13 +255,6 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", function(event){
         const key = event.key;
         var getInput = document.getElementById('input').value;
-
-        //Update and show word at top
-        if(document.getElementById('input').innerHTML == 'Word'){
-            document.getElementById('word').style.display = 'flex';
-        } else{
-            document.getElementById('word').style.display = 'none';
-        }
 
         if (key === "Backspace") {
             document.getElementById('backspace').classList.add('keyPressed');
@@ -327,13 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Show the word in the header while typing
     function headerWord(){
-        if(document.getElementById('input').innerHTML != 'Word'){
-            //Hide word initially
-            document.getElementById('word').style.display = 'flex';
-            //document.getElementById('word').innerHTML = 'right';
-        } else{
-            document.getElementById('word').style.display = 'none';
-        }
     }
 
 });//doc ready

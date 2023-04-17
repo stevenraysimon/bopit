@@ -47,7 +47,9 @@ header{
 }
 
 #word{
-  display: none;
+  display: flex;
+  font-size: 3em;
+  color: $yellow;
 }
 
 .modal{
