@@ -2,6 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
+    var showTime, score, loseSound;
+    var setTimeShowTime = 1;
+
+    //Run modal
+    modals();
 
     //Play and pause
     document.querySelector('.playPause').setAttribute('id', 'playPause');
@@ -14,6 +19,9 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('play').classList.remove('fa-play')
             document.getElementById('play').classList.add('fa-stop');
             playing = true;
+            //Reset input
+            document.getElementById('input').value = '';
+            document.getElementById('input').placeholder='Get Ready...';
             playGame();
             getRandomWord();
 
@@ -28,6 +36,47 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });//click playPause
 
+    function modals(){
+        //Level selected and hide modal
+        document.getElementById('submit').addEventListener('click', function(){
+
+            //Reset score
+            score = 0;
+
+            //Set speed and play
+            if(document.getElementById('easy').checked){
+                document.querySelector('.modal').style.display = 'none';
+                setTimeShowTime = 5;
+                document.getElementById('playPause').classList.add('playing');
+                document.getElementById('play').classList.remove('fa-play')
+                document.getElementById('play').classList.add('fa-stop');
+                playing = true;
+                playGame();
+                getRandomWord();
+            } else if(document.getElementById('medium').checked){
+                document.querySelector('.modal').style.display = 'none';
+                setTimeShowTime = 3;
+                document.getElementById('playPause').classList.add('playing');
+                document.getElementById('play').classList.remove('fa-play')
+                document.getElementById('play').classList.add('fa-stop');
+                playing = true;
+                playGame();
+                getRandomWord();
+            } else if(document.getElementById('hard').checked){
+                document.querySelector('.modal').style.display = 'none';
+                setTimeShowTime = 1;
+                document.getElementById('playPause').classList.add('playing');
+                document.getElementById('play').classList.remove('fa-play')
+                document.getElementById('play').classList.add('fa-stop');
+                playing = true;
+                playGame();
+                getRandomWord();
+            }
+        });
+
+        //On lose show modal
+    }
+
     function getRandomWord(){
 
         //Words to match
@@ -37,10 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
         let randomWord = dictionary[Math.floor(Math.random() * dictionary.length)];
 
         return randomWord;
-    }
+    }//getRandomWord
 
-    var game, showTime, score;
-    var setTimeShowTime = 1;
+    //Set Hard 1, Medium 3, Easy 5
 
     //Game
     function playGame(){
@@ -50,13 +98,19 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('input').placeholder= getRandomWord();
 
         //Set timer
-        var time = 5000;
         document.getElementById("beat").play();
         document.getElementById("beat").loop = true;
 
         //Set timer display
         timeShowTime = setTimeShowTime;
         score = 0;
+
+        //Update score
+        document.getElementById("score1").innerHTML = score;
+        document.getElementById("score2").innerHTML = score;
+
+        //Catch lose sound choice
+        loseSound = document.getElementById('lose'+ randomInt(1, 5));
 
         //Playing
         console.log('Playing');
@@ -66,12 +120,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Check game status
         if (playing == true){
-            //Run game loop
-            game = setInterval(() => {
-                //Playing
-                console.log('Playing');
-            }, time);
 
+            //Run game loop
             showTime = setInterval(() => {
                 //Playing
                 document.getElementById("timer").innerHTML = timeShowTime;
@@ -84,7 +134,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Set a new word to be the placeholder
                         document.getElementById('input').placeholder= getRandomWord();
                         //Update score
-                        document.getElementById("score").innerHTML = score;
+                        document.getElementById("score1").innerHTML = score;
+                        document.getElementById("score2").innerHTML = score;
                         //Clear input
                         document.getElementById('input').value = '';
                     } else{
@@ -93,20 +144,26 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("beat").pause();
                         document.getElementById("beat").currentTime = 0;
 
+                        //Show modal
+                        document.querySelector('.modal').style.display = 'flex';
+
+                        //Play lose sound
+                        loseSound.play();
+                        loseSound.addEventListener("ended", function(){
+                            //Reset input
+                            document.getElementById('input').value = '';
+                            document.getElementById('input').placeholder='Try Again';
+                        });
+
                         //Clear timer
                         timeShowTime = 0;
                         document.getElementById("timer").innerHTML = timeShowTime;
 
-                        //Reset a new word to be the placeholder
-                        document.getElementById('input').placeholder='Text';
+                        //Hide word
+                        document.getElementById('word').style.display = 'none';
 
                         //Clear loop
-                        clearInterval(game);
                         clearInterval(showTime);
-
-                        //Reset input
-                        document.getElementById('input').value = '';
-                        document.getElementById('input').placeholder='Text';
 
                         //Reset play button
                         playing = false;
@@ -120,22 +177,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 } else{
                     timeShowTime--;
                 }
-            }, 1000);
+            }, 500);
 
             //requestAnimationFrame(play);
 
-            //Play music 
-
-            //Run timer
-
-            //Check if word matches input
-
-            //If timer runs out before word match, end game
-
-            //If matches, next word
-
-
         } else{
+            //If Stopped ********************************************
 
             //cancelAnimationFrame(play);
             console.log('Stopped');
@@ -146,18 +193,23 @@ document.addEventListener("DOMContentLoaded", () => {
             timeShowTime = 0;
             document.getElementById("timer").innerHTML = timeShowTime;
 
+            //Show modal
+            document.querySelector('.modal').style.display = 'flex';
+
             //Reset a new word to be the placeholder
-            document.getElementById('input').placeholder='Text'; 
+            document.getElementById('input').placeholder='Get Ready...'; 
             document.getElementById('input').value = '';
 
+            //Hide word
+            document.getElementById('word').style.display = 'none';
+
             //Clear loop
-            clearInterval(game);
             clearInterval(showTime);
 
             //Disable the input field
             //Set keypress to return false
         }
-    }
+    }//playGame
 
     //Set up ids
     function setIds(){
@@ -190,6 +242,9 @@ document.addEventListener("DOMContentLoaded", () => {
         //Keyboard Lights
         document.getElementById(`${name}`).classList.add('keyPressed');
 
+        //Update and show word at top
+        headerWord();
+
         if (name != 'capslock'){
             setTimeout(function(){
                 document.getElementById(`${name}`).classList.remove('keyPressed');
@@ -204,6 +259,13 @@ document.addEventListener("DOMContentLoaded", () => {
         const key = event.key;
         var getInput = document.getElementById('input').value;
 
+        //Update and show word at top
+        if(document.getElementById('input').innerHTML == 'Word'){
+            document.getElementById('word').style.display = 'flex';
+        } else{
+            document.getElementById('word').style.display = 'none';
+        }
+
         if (key === "Backspace") {
             document.getElementById('backspace').classList.add('keyPressed');
             document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
@@ -212,15 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 100);
             return false;
         }
-
-
-        //If caps locks
-        // if(key === "CapsLock"){
-        //     checkCaps();
-        // } 
     
     });
 
+    //Check if caps is on
     function checkCaps(){
         if(caps === true){
             document.getElementById('capslock').style.backgroundColor = '#e9e9e9';
@@ -236,6 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
     for (var i = 0; i < screenKeys.length; i++) {
         screenKeys[i].addEventListener('click', keyLight, false);
     }
+
+    //Keyboard light up
     function keyLight(){
         var input = this.id;
 
@@ -264,5 +323,20 @@ document.addEventListener("DOMContentLoaded", () => {
     //     document.getElementById(`${name}`).style.backgroundColor = '#2283FF';
     //     document.getElementById(`${name}`).style.color = '#FFF';
     // });//Refresh keys
+
+    function randomInt(min, max) { // min and max included 
+        return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+
+    //Show the word in the header while typing
+    function headerWord(){
+        if(document.getElementById('input').innerHTML != 'Word'){
+            //Hide word initially
+            document.getElementById('word').style.display = 'flex';
+            //document.getElementById('word').innerHTML = 'right';
+        } else{
+            document.getElementById('word').style.display = 'none';
+        }
+    }
 
 });//doc ready

@@ -9,6 +9,9 @@
   <link href="https://fonts.googleapis.com/css?family=Roboto:300" rel="stylesheet">
   <link href="styles/style.css" rel="stylesheet">
   <link rel="stylesheet" href="styles/font-awesome.min.css"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Delicious+Handrawn&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
   <audio id="beat" src="sounds/beat.mp3"></audio>
   <audio id="start1" src="sounds/start1.mp3"></audio>
   <audio id="start2" src="sounds/start2.mp3"></audio>
@@ -19,12 +22,40 @@
   <audio id="lose5" src="sounds/lose5.mp3"></audio>
 </head>
 <body>
+  <div class="modal">
+    <div class="box">
+        <img src="images/bopit.png" />
+        <h1>Bop It Keyboard</h1>
+        <p>Use the keyboard to type the word before the timer goes off.</p>
+        <h6>Score: <span class="score" id="score1">0</span></h6>
+        <div class="level">
+          <form onsubmit="return false">
+            <label>
+              <input type="radio" name="radio" id="easy" checked/>
+              <span>Easy</span>
+            </label>
+            <label>
+              <input type="radio" name="radio" id="medium"/>
+              <span>Medium</span>
+            </label>
+            <label>
+              <input type="radio" name="radio" id="hard"/>
+              <span>Hard</span>
+            </label>
+            <input type="submit" value="Play" id="submit">
+          </form>
+        </div>
+    </div>
+  </div>
   <header>
     <div class="header-items">
         <div class="logo">
           <img src="images/logo.png" />
         </div>
-        <h6>Score: <span id="score">0</span></h6>
+        <h6>Score: <span class="score" id="score2">0</span></h6>
+    </div>
+    <div class="header-items" id="word">
+      <h6>Word</h6>
     </div>
     <div class="header-items">
         <h6>Timer: <span id="timer">0</span> sec</h6>
@@ -34,7 +65,7 @@
     </div>
   </header>
   <div class="display">
-    <input placeholder="Text" id="input" disabled>
+    <input placeholder="Get Ready..." id="input" disabled>
   </div>
   <div class="keyboard-container">
     <div class="keyboard">
