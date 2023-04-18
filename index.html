@@ -46,188 +46,190 @@
           </form>
         </div>
     </div>
-  </div>
-  <header>
-    <div class="header-items">
-        <div class="logo">
-          <img src="images/logo.png" />
+  </div><!--modal-->
+  <div class="wrapper">
+      <header>
+        <div class="header-items">
+            <div class="logo">
+              <img src="images/logo.png" />
+            </div>
+            <h6>Score: <span class="score" id="score2">0</span></h6>
         </div>
-        <h6>Score: <span class="score" id="score2">0</span></h6>
-    </div>
-    <div class="header-items">
-      <h6 id="word">Word</h6>
-    </div>
-    <div class="header-items">
-        <h6>Timer: <span id="timer">0</span> sec</h6>
-        <div class="playPause">
-          <p><i id="play" class="fa fa-play"></i></p>
+        <div class="header-items">
+          <h6 id="word">Word</h6>
         </div>
-    </div>
-  </header>
-  <div class="display">
-    <input placeholder="Get Ready..." id="input" disabled>
-  </div>
-  <div class="keyboard-container">
-    <div class="keyboard">
-      <!-- First row -->
-      <div class="key">
-        <div class="key__top">±</div>
-        <div class="key__bottom">§</div>
+        <div class="header-items">
+            <h6>Timer: <span id="timer">0</span> sec</h6>
+            <div class="playPause">
+              <p><i id="play" class="fa fa-play"></i></p>
+            </div>
+        </div>
+      </header>
+      <div class="display">
+        <input placeholder="Get Ready..." id="input" disabled>
       </div>
-      <div class="key">
-        <div class="key__top">!</div>
-        <div class="key__bottom">1</div>
+      <div class="keyboard-container">
+        <div class="keyboard">
+          <!-- First row -->
+          <div class="key">
+            <div class="key__top">±</div>
+            <div class="key__bottom">§</div>
+          </div>
+          <div class="key">
+            <div class="key__top">!</div>
+            <div class="key__bottom">1</div>
+          </div>
+          <div class="key">
+            <div class="key__top">@</div>
+            <div class="key__bottom">2</div>
+          </div>
+          <div class="key">
+            <div class="key__top">#</div>
+            <div class="key__bottom">3</div>
+          </div>
+          <div class="key">
+            <div class="key__top">$</div>
+            <div class="key__bottom">4</div>
+          </div>
+          <div class="key">
+            <div class="key__top">%</div>
+            <div class="key__bottom">5</div>
+          </div>
+          <div class="key">
+            <div class="key__top">^</div>
+            <div class="key__bottom">6</div>
+          </div>
+          <div class="key">
+            <div class="key__top">&amp;</div>
+            <div class="key__bottom">7</div>
+          </div>
+          <div class="key">
+            <div class="key__top">*</div>
+            <div class="key__bottom">8</div>
+          </div>
+          <div class="key">
+            <div class="key__top">(</div>
+            <div class="key__bottom">9</div>
+          </div>
+          <div class="key">
+            <div class="key__top">)</div>
+            <div class="key__bottom">0</div>
+          </div>
+          <div class="key">
+            <div class="key__top">_</div>
+            <div class="key__bottom">-</div>
+          </div>
+          <div class="key">
+            <div class="key__top">+</div>
+            <div class="key__bottom">=</div>
+          </div>
+          <div class="key is-backspace" id="backspace">
+            <div class="key__bottom">&larr;</div>
+          </div>
+          <!-- Second row -->
+          <div class="key is-tab">
+            <div class="key__bottom">&rarrb;</div>
+          </div>
+          <div class="key">Q</div>
+          <div class="key">W</div>
+          <div class="key">E</div>
+          <div class="key">R</div>
+          <div class="key">T</div>
+          <div class="key">Y</div>
+          <div class="key">U</div>
+          <div class="key">I</div>
+          <div class="key">O</div>
+          <div class="key">P</div>
+          <div class="key">
+            <div class="key__top">{</div>
+            <div class="key__bottom">[</div>
+          </div>
+          <div class="key">
+            <div class="key__top">}</div>
+            <div class="key__bottom">]</div>
+          </div>
+          <div class="key is-enter">
+            <div class="key__top">&larrhk;</div>
+            <div class="key__bottom"></div>
+          </div>
+          <!-- Third row -->
+          <div class="key is-capslock" id="capslock"></div>
+          <div class="key">A</div>
+          <div class="key">S</div>
+          <div class="key">D</div>
+          <div class="key">F</div>
+          <div class="key">G</div>
+          <div class="key">H</div>
+          <div class="key">J</div>
+          <div class="key">K</div>
+          <div class="key">L</div>
+          <div class="key">
+            <div class="key__top">:</div>
+            <div class="key__bottom">;</div>
+          </div>
+          <div class="key">
+            <div class="key__top">"</div>
+            <div class="key__bottom">'</div>
+          </div>
+          <div class="key">
+            <div class="key__top">|</div>
+            <div class="key__bottom">\</div>
+          </div>
+          <!-- Fourth row -->
+          <div class="key is-shift-left" id="shift-left"></div>
+          <div class="key">
+            <div class="key__top">~</div>
+            <div class="key__bottom">`</div>
+          </div>
+          <div class="key">Z</div>
+          <div class="key">X</div>
+          <div class="key">C</div>
+          <div class="key">V</div>
+          <div class="key">B</div>
+          <div class="key">N</div>
+          <div class="key">M</div>
+          <div class="key">
+            <div class="key__top">&lt;</div>
+            <div class="key__bottom">,</div>
+          </div>
+          <div class="key">
+            <div class="key__top">&gt;</div>
+            <div class="key__bottom">.</div>
+          </div>
+          <div class="key">
+            <div class="key__top">?</div>
+            <div class="key__bottom">/</div>
+          </div>
+          <div class="key is-shift-right" id="shift-right"></div>
+          <!-- Fifth row -->
+          <div class="key is-left">
+            <div class="key__bottom">fn</div>
+          </div>
+          <div class="key is-right">
+            <div class="key__bottom">control</div>
+          </div>
+          <div class="key is-right">
+            <div class="key__top">alt</div>
+            <div class="key__bottom">option</div>
+          </div>
+          <div class="key is-command is-right">
+            <div class="key__bottom" id="command-right">command</div>
+          </div>
+          <div class="key is-space" id="space"></div>
+          <div class="key is-command is-left">
+            <div class="key__bottom" id="command-left">command</div>
+          </div>
+          <div class="key is-left">
+            <div class="key__top">alt</div>
+            <div class="key__bottom">option</div>
+          </div>
+          <div class="key">&ltrif;</div>
+          <div class="key is-arrow-up">&utrif;</div>
+          <div class="key is-arrow-down">&dtrif;</div>
+          <div class="key">&rtrif;</div>
+        </div>
       </div>
-      <div class="key">
-        <div class="key__top">@</div>
-        <div class="key__bottom">2</div>
-      </div>
-      <div class="key">
-        <div class="key__top">#</div>
-        <div class="key__bottom">3</div>
-      </div>
-      <div class="key">
-        <div class="key__top">$</div>
-        <div class="key__bottom">4</div>
-      </div>
-      <div class="key">
-        <div class="key__top">%</div>
-        <div class="key__bottom">5</div>
-      </div>
-      <div class="key">
-        <div class="key__top">^</div>
-        <div class="key__bottom">6</div>
-      </div>
-      <div class="key">
-        <div class="key__top">&amp;</div>
-        <div class="key__bottom">7</div>
-      </div>
-      <div class="key">
-        <div class="key__top">*</div>
-        <div class="key__bottom">8</div>
-      </div>
-      <div class="key">
-        <div class="key__top">(</div>
-        <div class="key__bottom">9</div>
-      </div>
-      <div class="key">
-        <div class="key__top">)</div>
-        <div class="key__bottom">0</div>
-      </div>
-      <div class="key">
-        <div class="key__top">_</div>
-        <div class="key__bottom">-</div>
-      </div>
-      <div class="key">
-        <div class="key__top">+</div>
-        <div class="key__bottom">=</div>
-      </div>
-      <div class="key is-backspace" id="backspace">
-        <div class="key__bottom">&larr;</div>
-      </div>
-      <!-- Second row -->
-      <div class="key is-tab">
-        <div class="key__bottom">&rarrb;</div>
-      </div>
-      <div class="key">Q</div>
-      <div class="key">W</div>
-      <div class="key">E</div>
-      <div class="key">R</div>
-      <div class="key">T</div>
-      <div class="key">Y</div>
-      <div class="key">U</div>
-      <div class="key">I</div>
-      <div class="key">O</div>
-      <div class="key">P</div>
-      <div class="key">
-        <div class="key__top">{</div>
-        <div class="key__bottom">[</div>
-      </div>
-      <div class="key">
-        <div class="key__top">}</div>
-        <div class="key__bottom">]</div>
-      </div>
-      <div class="key is-enter">
-        <div class="key__top">&larrhk;</div>
-        <div class="key__bottom"></div>
-      </div>
-      <!-- Third row -->
-      <div class="key is-capslock" id="capslock"></div>
-      <div class="key">A</div>
-      <div class="key">S</div>
-      <div class="key">D</div>
-      <div class="key">F</div>
-      <div class="key">G</div>
-      <div class="key">H</div>
-      <div class="key">J</div>
-      <div class="key">K</div>
-      <div class="key">L</div>
-      <div class="key">
-        <div class="key__top">:</div>
-        <div class="key__bottom">;</div>
-      </div>
-      <div class="key">
-        <div class="key__top">"</div>
-        <div class="key__bottom">'</div>
-      </div>
-      <div class="key">
-        <div class="key__top">|</div>
-        <div class="key__bottom">\</div>
-      </div>
-      <!-- Fourth row -->
-      <div class="key is-shift-left" id="shift-left"></div>
-      <div class="key">
-        <div class="key__top">~</div>
-        <div class="key__bottom">`</div>
-      </div>
-      <div class="key">Z</div>
-      <div class="key">X</div>
-      <div class="key">C</div>
-      <div class="key">V</div>
-      <div class="key">B</div>
-      <div class="key">N</div>
-      <div class="key">M</div>
-      <div class="key">
-        <div class="key__top">&lt;</div>
-        <div class="key__bottom">,</div>
-      </div>
-      <div class="key">
-        <div class="key__top">&gt;</div>
-        <div class="key__bottom">.</div>
-      </div>
-      <div class="key">
-        <div class="key__top">?</div>
-        <div class="key__bottom">/</div>
-      </div>
-      <div class="key is-shift-right" id="shift-right"></div>
-      <!-- Fifth row -->
-      <div class="key is-left">
-        <div class="key__bottom">fn</div>
-      </div>
-      <div class="key is-right">
-        <div class="key__bottom">control</div>
-      </div>
-      <div class="key is-right">
-        <div class="key__top">alt</div>
-        <div class="key__bottom">option</div>
-      </div>
-      <div class="key is-command is-right">
-        <div class="key__bottom" id="command-right">command</div>
-      </div>
-      <div class="key is-space" id="space"></div>
-      <div class="key is-command is-left">
-        <div class="key__bottom" id="command-left">command</div>
-      </div>
-      <div class="key is-left">
-        <div class="key__top">alt</div>
-        <div class="key__bottom">option</div>
-      </div>
-      <div class="key">&ltrif;</div>
-      <div class="key is-arrow-up">&utrif;</div>
-      <div class="key is-arrow-down">&dtrif;</div>
-      <div class="key">&rtrif;</div>
-    </div>
-  </div>
+  </div><!--wrapper-->
   <script src="js/dictionary.js"></script>
   <script src="js/index.js"></script>
   <script src="js/play.js"></script>

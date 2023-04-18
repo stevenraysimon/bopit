@@ -43,6 +43,10 @@ body{
     font-family: $font;
 }
 
+.wrapper{
+  display: none;
+}
+
 header{
   display: flex;
   justify-content: space-between;
@@ -57,18 +61,17 @@ header{
 .modal{
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: relative;
   z-index: 1000;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: black;
   width: 100%;
   height: 100%;
-  min-height: 1000px;
-  overflow: scroll;
   padding: 20px;
   box-sizing: border-box;
+  margin-top: 120px;
   .box{
     width: 100%;
     max-width: 500px;
@@ -222,6 +225,7 @@ header{
   padding: $keyboard-spacing;
   transform-origin: top left;
   margin: auto;
+  transform: inherit;
 }
 .key{
   align-items: center;
@@ -377,11 +381,6 @@ header{
     .level{
       form{
         flex-direction: column;
-      }
-    }
-    .modal{
-      .box{
-        margin-top: 100px;
       }
     }
     .display{

@@ -36,14 +36,19 @@ document.addEventListener("DOMContentLoaded", () => {
     });//click playPause
 
     function modals(){
+
         //Level selected and hide modal
         document.getElementById('submit').addEventListener('click', function(){
             //Reset score
             score = 0;
 
+            //Hide modal
+            document.querySelector('.modal').style.display = 'none';
+            document.querySelector('.wrapper').style.display = 'block';
+            updateScale();
+
             //Set speed and play
             if(document.getElementById('easy').checked){
-                document.querySelector('.modal').style.display = 'none';
                 setTimeShowTime = 8;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
@@ -51,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 playing = true;
                 playGame();
             } else if(document.getElementById('medium').checked){
-                document.querySelector('.modal').style.display = 'none';
                 setTimeShowTime = 5;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
@@ -59,7 +63,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 playing = true;
                 playGame();
             } else if(document.getElementById('hard').checked){
-                document.querySelector('.modal').style.display = 'none';
                 setTimeShowTime = 3;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
@@ -142,6 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("beat").currentTime = 0;
 
                         //Show modal
+                        document.querySelector('.wrapper').style.display = 'none';
                         document.querySelector('.modal').style.display = 'flex';
 
                         //Play lose sound
@@ -191,6 +195,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("timer").innerHTML = timeShowTime;
 
             //Show modal
+            document.querySelector('.wrapper').style.display = 'none';
             document.querySelector('.modal').style.display = 'flex';
 
             //Reset a new word to be the placeholder
@@ -317,9 +322,6 @@ document.addEventListener("DOMContentLoaded", () => {
     function randomInt(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
-
-    //Show the word in the header while typing
-    function headerWord(){
-    }
+      
 
 });//doc ready
