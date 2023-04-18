@@ -91,6 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('input').placeholder= setWord;
         //Show word
         document.getElementById('word').innerHTML = setWord;
+        document.getElementById('wordMobile').innerHTML = setWord;
 
         //Set timer
         document.getElementById("beat").play();
@@ -133,6 +134,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById('input').placeholder= setWord;
                         //Show word
                         document.getElementById('word').innerHTML = setWord;
+                        document.getElementById('wordMobile').innerHTML = setWord;
                         //Update score
                         document.getElementById("score1").innerHTML = score;
                         document.getElementById("score2").innerHTML = score;
@@ -159,9 +161,6 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Clear timer
                         timeShowTime = 0;
                         document.getElementById("timer").innerHTML = timeShowTime;
-
-                        //Hide word
-                        //document.getElementById('word').style.display = 'none';
 
                         //Clear loop
                         clearInterval(showTime);
@@ -201,9 +200,6 @@ document.addEventListener("DOMContentLoaded", () => {
             //Reset a new word to be the placeholder
             document.getElementById('input').placeholder='Get Ready...'; 
             document.getElementById('input').value = '';
-
-            //Hide word
-            //document.getElementById('word').style.display = 'none';
 
             //Clear loop
             clearInterval(showTime);
