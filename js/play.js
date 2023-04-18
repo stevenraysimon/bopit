@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", () => {
             //Reset score
             score = 0;
 
+            //Trigger mobile keyboard
+            document.getElementById('input').focus();
+
             //Hide modal
             document.querySelector('.modal').style.display = 'none';
             document.querySelector('.wrapper').style.display = 'block';
@@ -49,21 +52,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             //Set speed and play
             if(document.getElementById('easy').checked){
-                setTimeShowTime = 8;
+                setTimeShowTime = 9;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
             } else if(document.getElementById('medium').checked){
-                setTimeShowTime = 5;
+                setTimeShowTime = 6;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
             } else if(document.getElementById('hard').checked){
-                setTimeShowTime = 3;
+                setTimeShowTime = 4;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
