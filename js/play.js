@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
-    var showTime, score, loseSound;
+    var showTime, score, loseSound, matchSound;
     var setTimeShowTime = 1;
 
     //Run modal
@@ -131,6 +131,10 @@ document.addEventListener("DOMContentLoaded", () => {
                     
                     if(document.getElementById('input').placeholder === document.getElementById('input').value){
                         //If Win ********************************************
+                        //Play a sound when they match
+                        matchSound = document.getElementById('match'+ randomInt(1, 6));
+                        matchSound.play();
+                        //Reset time and increase score
                         timeShowTime = setTimeShowTime;
                         score++;
                         //Set a new word to be the placeholder
@@ -333,11 +337,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('input').value += input; 
         }
     }
-
-    // document.addEventListener("keyup", function(){
-    //     document.getElementById(`${name}`).style.backgroundColor = '#2283FF';
-    //     document.getElementById(`${name}`).style.color = '#FFF';
-    // });//Refresh keys
 
     function randomInt(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min)
