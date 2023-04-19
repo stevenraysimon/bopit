@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
-    var showTime, score, loseSound, matchSound;
+    var showTime, score, loseSound, matchSound, scoreSound, scoreBang;
     var setTimeShowTime = 1;
 
     //Run modal
@@ -111,6 +111,11 @@ document.addEventListener("DOMContentLoaded", () => {
         //Catch lose sound choice
         loseSound = document.getElementById('lose'+ randomInt(1, 5));
 
+        //Get score sound
+        scoreSound = document.getElementById('scoreSound');
+        scoreBang = document.getElementById('scoreBang');
+        var s = 0;
+
         //Playing
         console.log('Playing');
 
@@ -163,6 +168,19 @@ document.addEventListener("DOMContentLoaded", () => {
                             //Reset input
                             document.getElementById('input').value = '';
                             document.getElementById('input').placeholder='Try Again';
+
+                            if(score > 0){
+                                scoreSound.play();
+                                scoreSound.addEventListener("ended", function(){
+                                    //Score sound ends
+                                    setInterval(() => {
+                                        if(s < score){
+                                            scoreBang.play();
+                                            s++;
+                                        }
+                                    }, 800);
+                                });
+                            }
                         });
 
                         //Clear timer
@@ -270,7 +288,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         //Update and show word at top
-        headerWord();
+        //headerWord();
 
         //alert(`Key pressed ${name} \r\n Key code value: ${code}`);
     }, false);
