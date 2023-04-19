@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
             score = 0;
 
             //Trigger mobile keyboard
-            document.getElementById('input').focus();
+            //document.getElementById('input').focus();
 
             //Hide modal
             document.querySelector('.modal').style.display = 'none';
@@ -215,6 +215,9 @@ document.addEventListener("DOMContentLoaded", () => {
     //Set up ids
     function setIds(){
         var keys = document.getElementsByClassName("key");
+        var mobileKeys = document.getElementsByClassName("keyboard__key");
+
+        //Desktop
         for (var i = 0; i < keys.length; i++) {
             if(keys.item(i).getAttribute('id') === null){
                 if(keys.item(i).querySelectorAll('div')[1]){
@@ -226,10 +229,23 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             }
         }
+
+        //Mobile
+        for (var j = 0; j < mobileKeys.length; j++) {
+            if(mobileKeys.item(j).getAttribute('id') === null){
+                if(mobileKeys.item(j).querySelectorAll('div')[1]){
+                    mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).querySelectorAll('div')[1].innerHTML);
+                } else if(mobileKeys.item(j).querySelectorAll('div')[0]){
+                    mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).querySelectorAll('div')[0].innerHTML);
+                } else{
+                    mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).innerHTML);
+                }
+            }
+        }
     }
     setIds();
 
-    //Keyboard events
+    //Desktop Keyboard events
     document.addEventListener('keypress', (event) => {
         var name = event.key;
         var code = event.code;
@@ -288,6 +304,11 @@ document.addEventListener("DOMContentLoaded", () => {
         screenKeys[i].addEventListener('click', keyLight, false);
     }
 
+    var mobileScreenKeys = document.getElementsByClassName('keyboard__key');
+    for (var j = 0; j < mobileScreenKeys.length; j++) {
+        mobileScreenKeys[j].addEventListener('click', keyLight, false);
+    }
+
     //Keyboard light up
     function keyLight(){
         var input = this.id;
@@ -305,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         //Catch input
-        if(input == 'backspace'){
+        if(input == 'backspace' || input == 'mobilebackspace'){
             var getInput = document.getElementById('input').value;
             document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
         } else{
