@@ -21,6 +21,7 @@ $playing: #FF5E52;
 $playingHover: #CC4B41;
 $yellow: #F9E834;
 $purple: #0A0B4A;
+$black: #333;
 
 $font: 'Delicious Handrawn', 'Nanum Pen Script', Helvetica, Arial, sans-serif;
 
@@ -233,8 +234,8 @@ header{
 }
 .key{
   align-items: center;
-  background-color: $color-key;
-  color: $color-text;
+  background-color: $black;
+  color: $color-white;
   border-radius: $key-radius;
   cursor: pointer;
   display: flex;
@@ -295,7 +296,7 @@ header{
       position: absolute;
     }
     &::before{
-      background-color: $color-key;
+      background-color: $black;
       border-radius: $key-radius 0 0 $key-radius;
       height: $key-size;
       left: - calc($key-size / 4);
@@ -304,7 +305,7 @@ header{
     }
     &::after{
       border-top-right-radius: $key-radius;
-      box-shadow: - $key-gutter $key-gutter 0 0 $color-key inset;
+      box-shadow: - $key-gutter $key-gutter 0 0 $black inset;
       cursor: default;
       height: $key-gutter * 2;
       left: - $key-gutter;
