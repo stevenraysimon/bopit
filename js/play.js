@@ -306,6 +306,10 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 100);
             return false;
         }
+
+        if(key === "Enter"){
+            event.preventDefault();
+        }
     
     });
 
