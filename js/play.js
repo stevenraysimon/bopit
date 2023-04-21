@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
-    var showTime, score, loseSound, matchSound, scoreSound, scoreBang;
+    var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang, scoreLoop;
     var setTimeShowTime = 1;
 
     //Run modal
@@ -48,25 +48,26 @@ document.addEventListener("DOMContentLoaded", () => {
             //Hide modal
             document.querySelector('.modal').style.display = 'none';
             document.querySelector('.wrapper').style.display = 'block';
+            //Update the keyboard scale from index.js
             updateScale();
 
             //Set speed and play
             if(document.getElementById('easy').checked){
-                setTimeShowTime = 9;
+                setTimeShowTime = 8;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
             } else if(document.getElementById('medium').checked){
-                setTimeShowTime = 6;
+                setTimeShowTime = 5;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
             } else if(document.getElementById('hard').checked){
-                setTimeShowTime = 4;
+                setTimeShowTime = 3;
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
@@ -126,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (playing == true){
 
             //Run game loop
-            showTime = setInterval(() => {
+            gameLoop = setInterval(() => {
 
                 //Playing
                 setWord = getRandomWord();
@@ -162,6 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.querySelector('.wrapper').style.display = 'none';
                         document.querySelector('.modal').style.display = 'flex';
 
+                        //Disable play button
+                        document.getElementById('submit').setAttribute('disabled', 'true');
+
                         //Play lose sound
                         loseSound.play();
                         loseSound.addEventListener("ended", function(){
@@ -173,13 +177,21 @@ document.addEventListener("DOMContentLoaded", () => {
                                 scoreSound.play();
                                 scoreSound.addEventListener("ended", function(){
                                     //Score sound ends
-                                    setInterval(() => {
+                                    scoreLoop = setInterval(() => {
                                         if(s < score){
                                             scoreBang.play();
                                             s++;
                                         }
+                                        if(s === score){
+                                            //Disable play button
+                                            document.getElementById('submit').removeAttribute('disabled', 'true');
+                                            s++;
+                                        }
                                     }, 800);
                                 });
+                            } else{
+                                //Disable play button
+                                document.getElementById('submit').removeAttribute('disabled', 'true');
                             }
                         });
 
@@ -188,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("timer").innerHTML = timeShowTime;
 
                         //Clear loop
-                        clearInterval(showTime);
+                        clearInterval(gameLoop);
 
                         //Reset play button
                         playing = false;
@@ -227,7 +239,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('input').value = '';
 
             //Clear loop
-            clearInterval(showTime);
+            clearInterval(gameLoop);
 
             //Disable the input field
             //Set keypress to return false

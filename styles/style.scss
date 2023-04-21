@@ -124,9 +124,13 @@ header{
       font-family: $font;
       font-size: 3em;
       margin: 10px auto;
+      opacity: 1;
       &:hover{
         background-color: $playHover;
         cursor: pointer;
+      }
+      &:disabled{
+        opacity: 0.3;
       }
     }
   }
