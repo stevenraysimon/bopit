@@ -2,19 +2,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
-    var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang, scoreLoop;
+    var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang, s;
     var setTimeShowTime = 1;
+    var isMobile;
 
     //Run modal
     modals();
 
     //Check if on a mobile device
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
-        // true for mobile device
-        alert("mobile device");
+        //mobile device
+        isMobile = true;
       }else{
-        // false for not mobile device
-        alert("desktop device");
+        //not mobile device
+        isMobile = false;
     }
 
     //Play and pause
@@ -106,9 +107,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById('word').innerHTML = setWord;
         document.getElementById('wordMobile').innerHTML = setWord;
 
-        //Set timer
-        document.getElementById("beat").play();
-        document.getElementById("beat").loop = true;
+        //Play beat
+        if(isMobile){
+            //Play the audio sprite here
+        }else{
+            document.getElementById("beat").play();
+            document.getElementById("beat").loop = true;
+        }
 
         //Set timer display
         timeShowTime = setTimeShowTime;
@@ -124,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Get score sound
         scoreSound = document.getElementById('scoreSound');
         scoreBang = document.getElementById('scoreBang');
-        var s = 0;
+        s = 0;
 
         //Playing
         console.log('Playing');
@@ -147,8 +152,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     if(document.getElementById('input').placeholder === document.getElementById('input').value){
                         //If Win ********************************************
                         //Play a sound when they match
-                        matchSound = document.getElementById('match'+ randomInt(1, 6));
-                        matchSound.play();
+                        if(isMobile){
+                            //Play audio sprite 
+                        }else{
+                            matchSound = document.getElementById('match'+ randomInt(1, 6));
+                            matchSound.play();
+                        }
+
                         //Reset time and increase score
                         timeShowTime = setTimeShowTime;
                         score++;
@@ -176,7 +186,11 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById('submit').setAttribute('disabled', 'true');
 
                         //Play lose sound
-                        loseSound.play();
+                        if(isMobile){
+                            //Play audio sprite
+                        }else{
+                            loseSound.play();
+                        }
                         loseSound.addEventListener("ended", function(){
                             //Reset input
                             document.getElementById('input').value = '';
@@ -186,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                 scoreSound.play();
                                 scoreSound.addEventListener("ended", function(){
                                     //Score sound ends
-                                    scoreLoop = setInterval(() => {
+                                    setInterval(() => {
                                         if(s < score){
                                             scoreBang.play();
                                             s++;
