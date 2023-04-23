@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Variables
     var caps = false;
-    var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang, s;
+    var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang;
     var setTimeShowTime = 1;
     var isMobile;
 
@@ -129,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Get score sound
         scoreSound = document.getElementById('scoreSound');
         scoreBang = document.getElementById('scoreBang');
-        s = 0;
+        var s = 0;
 
         //Playing
         console.log('Playing');
