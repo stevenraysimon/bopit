@@ -8,6 +8,15 @@ document.addEventListener("DOMContentLoaded", () => {
     //Run modal
     modals();
 
+    //Check if on a mobile device
+    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+        // true for mobile device
+        alert("mobile device");
+      }else{
+        // false for not mobile device
+        alert("desktop device");
+    }
+
     //Play and pause
     document.querySelector('.playPause').setAttribute('id', 'playPause');
     let playing = false;
