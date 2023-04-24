@@ -45,11 +45,112 @@ document.addEventListener("DOMContentLoaded", () => {
         bang: {
             start: 29,
             length: 0.6
-        }
+        },
+        match1: {
+            start: 30,
+            length: 0.9
+        },
+        match2: {
+            start: 31,
+            length: 1.1
+        },
+        match3: {
+            start: 33,
+            length: 0.9
+        },
+        match4: {
+            start: 35,
+            length: 0.8
+        },
+        match5: {
+            start: 36,
+            length: 1.2
+        },
     };
 
     //Run modal
     modals();
+
+    //Handle stop of mobile audio
+    var handleBeatLoop = function() {
+        if (this.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+        }
+    };
+    var handleMatchStop = function() {
+        if (this.currentTime >= mobileSpriteData.match.start + mobileSpriteData.match.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleMatchOneStop = function() {
+        if (this.currentTime >= mobileSpriteData.match1.start + mobileSpriteData.match1.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleMatchTwoStop = function() {
+        if (this.currentTime >= mobileSpriteData.match2.start + mobileSpriteData.match2.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleMatchThreeStop = function() {
+        if (this.currentTime >= mobileSpriteData.match3.start + mobileSpriteData.match3.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleMatchFourStop = function() {
+        if (this.currentTime >= mobileSpriteData.match4.start + mobileSpriteData.match4.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleMatchFiveStop = function() {
+        if (this.currentTime >= mobileSpriteData.match5.start + mobileSpriteData.match5.length) {
+            this.pause();
+            this.currentTime = mobileSpriteData.beat.start;
+            this.play();
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+        }
+    };
+    var handleLoseOneStop = function() {
+        if (this.currentTime >= mobileSpriteData.lose1.start + mobileSpriteData.lose1.length) {
+            this.pause();
+        }
+    };
+    var handleLoseTwoStop = function() {
+        if (this.currentTime >= mobileSpriteData.lose2.start + mobileSpriteData.lose2.length) {
+            this.pause();
+        }
+    };
+    var handleLoseThreeStop = function() {
+        if (this.currentTime >= mobileSpriteData.lose3.start + mobileSpriteData.lose3.length) {
+            this.pause();
+        }
+    };
+    var handleLoseFourStop = function() {
+        if (this.currentTime >= mobileSpriteData.lose4.start + mobileSpriteData.lose5.length) {
+            this.pause();
+        }
+    };
+    var handleLoseFiveStop = function() {
+        if (this.currentTime >= mobileSpriteData.lose5.start + mobileSpriteData.lose5.length) {
+            this.pause();
+        }
+    };
 
     //Check if on a mobile device
     if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
@@ -151,14 +252,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Play beat
         if(isMobile){
+            mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchThreeStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchFourStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchFiveStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseOneStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseTwoStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseThreeStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseFourStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseFiveStop, false);
             mobileSprite.currentTime = mobileSpriteData.beat.start;
             mobileSprite.play();
-            if (mobileSprite.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
-                //Loop the beat
-                mobileSprite.currentTime = mobileSpriteData.beat.start;
-                mobileSprite.play();
-                //mobileSprite.pause();
-            }
+            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }else{
             document.getElementById("beat").play();
             document.getElementById("beat").loop = true;
@@ -174,6 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Catch lose sound choice
         loseSound = document.getElementById('lose'+ randomInt(1, 5));
+        var mobileRandomLose = randomInt(1, 5);
 
         //Get score sound
         scoreSound = document.getElementById('scoreSound');
@@ -199,18 +307,39 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (timeShowTime == 0){
                     
                     if(document.getElementById('input').placeholder === document.getElementById('input').value){
+
                         //If Win ********************************************
                         //Play a sound when they match
+                        var mobileRandomMatch = randomInt(1, 6);
                         if(isMobile){
                             //Play audio sprite 
-                            mobileSprite.pause();
-                            mobileSprite.currentTime = mobileSpriteData.match.start;
-                            mobileSprite.play();
-                            if (mobileSprite.currentTime >= mobileSpriteData.match.start + mobileSpriteData.match.length) {
-                                //Loop the beat
-                                mobileSprite.currentTime = mobileSpriteData.beat.start;
+                            mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
+
+                            //random
+                            if(mobileRandomMatch == 1){
+                                mobileSprite.currentTime = mobileSpriteData.match.start;
                                 mobileSprite.play();
-                                //mobileSprite.pause();
+                                mobileSprite.addEventListener('timeupdate', handleMatchStop, false);
+                            } else if (mobileRandomMatch == 2){
+                                mobileSprite.currentTime = mobileSpriteData.match1.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleMatchOneStop, false);
+                            } else if (mobileRandomMatch == 3){
+                                mobileSprite.currentTime = mobileSpriteData.match2.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleMatchTwoStop, false);
+                            } else if (mobileRandomMatch == 4){
+                                mobileSprite.currentTime = mobileSpriteData.match3.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleMatchThreeStop, false);
+                            } else if (mobileRandomMatch == 5){
+                                mobileSprite.currentTime = mobileSpriteData.match4.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleMatchFourStop, false);
+                            } else if (mobileRandomMatch == 6){
+                                mobileSprite.currentTime = mobileSpriteData.match5.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleMatchFiveStop, false);
                             }
                         }else{
                             matchSound = document.getElementById('match'+ randomInt(1, 6));
@@ -246,9 +375,34 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Play lose sound
                         if(isMobile){
                             //Play audio sprite
-
+                            mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
+                            if(mobileRandomLose == 1){
+                                mobileSprite.currentTime = mobileSpriteData.lose1.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleLoseOneStop, false);
+                            } else if (mobileRandomLose == 2){
+                                mobileSprite.currentTime = mobileSpriteData.lose2.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleLoseTwoStop, false);
+                            } else if (mobileRandomLose == 3){
+                                mobileSprite.currentTime = mobileSpriteData.lose3.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleLoseThreeStop, false);
+                            } else if (mobileRandomLose == 4){
+                                mobileSprite.currentTime = mobileSpriteData.lose4.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleLoseFourStop, false);
+                            } else if (mobileRandomLose == 5){
+                                mobileSprite.currentTime = mobileSpriteData.lose5.start;
+                                mobileSprite.play();
+                                mobileSprite.addEventListener('timeupdate', handleLoseFiveStop, false);
+                            } 
+                            
                             //Disable play button
                             document.getElementById('submit').removeAttribute('disabled', 'true');
+                            //Reset input
+                            document.getElementById('input').value = '';
+                            document.getElementById('input').placeholder='Try Again';
                         }else{
                             loseSound.play();
                         }
