@@ -6,6 +6,48 @@ document.addEventListener("DOMContentLoaded", () => {
     var setTimeShowTime = 1;
     var isMobile;
 
+    //Get mobile audio
+    var mobileSprite = document.getElementById('mobileSprite');
+    // sprite data
+    var mobileSpriteData = {
+        beat: {
+            start: 0,
+            length: 1.8
+        },
+        lose1: {
+            start: 2,
+            length: 3.6
+        },
+        lose2: {
+            start: 6,
+            length: 4.6
+        },
+        lose3: {
+            start: 11,
+            length: 4.4
+        },
+        lose4: {
+            start: 16,
+            length: 3.8
+        },
+        lose5: {
+            start: 20,
+            length: 4.3
+        },
+        match: {
+            start: 25,
+            length: 2.1
+        },
+        score: {
+            start: 28,
+            length: 0.9
+        },
+        bang: {
+            start: 29,
+            length: 0.6
+        }
+    };
+
     //Run modal
     modals();
 
@@ -109,7 +151,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Play beat
         if(isMobile){
-            //Play the audio sprite here
+            mobileSprite.currentTime = mobileSpriteData.beat.start;
+            mobileSprite.play();
+            if (mobileSprite.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
+                //Loop the beat
+                mobileSprite.currentTime = mobileSpriteData.beat.start;
+                mobileSprite.play();
+                //mobileSprite.pause();
+            }
         }else{
             document.getElementById("beat").play();
             document.getElementById("beat").loop = true;
@@ -154,6 +203,15 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Play a sound when they match
                         if(isMobile){
                             //Play audio sprite 
+                            mobileSprite.pause();
+                            mobileSprite.currentTime = mobileSpriteData.match.start;
+                            mobileSprite.play();
+                            if (mobileSprite.currentTime >= mobileSpriteData.match.start + mobileSpriteData.match.length) {
+                                //Loop the beat
+                                mobileSprite.currentTime = mobileSpriteData.beat.start;
+                                mobileSprite.play();
+                                //mobileSprite.pause();
+                            }
                         }else{
                             matchSound = document.getElementById('match'+ randomInt(1, 6));
                             matchSound.play();
@@ -188,6 +246,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Play lose sound
                         if(isMobile){
                             //Play audio sprite
+
+                            //Disable play button
+                            document.getElementById('submit').removeAttribute('disabled', 'true');
                         }else{
                             loseSound.play();
                         }
