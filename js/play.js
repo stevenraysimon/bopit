@@ -27,8 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
             length: 4.4
         },
         lose4: {
-            start: 16,
-            length: 3.8
+            start: 16.5,
+            length: 3.9
         },
         lose5: {
             start: 20,
