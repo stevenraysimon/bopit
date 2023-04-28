@@ -207,6 +207,9 @@ document.addEventListener("DOMContentLoaded", () => {
             //Set speed and play
             if(document.getElementById('easy').checked){
                 setTimeShowTime = 8;
+                if(isMobile){
+                    setTimeShowTime = setTimeShowTime*2;
+                }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
@@ -214,6 +217,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 playGame();
             } else if(document.getElementById('medium').checked){
                 setTimeShowTime = 5;
+                if(isMobile){
+                    setTimeShowTime = setTimeShowTime*2;
+                }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
@@ -221,6 +227,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 playGame();
             } else if(document.getElementById('hard').checked){
                 setTimeShowTime = 3;
+                if(isMobile){
+                    setTimeShowTime = setTimeShowTime*2;
+                }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
