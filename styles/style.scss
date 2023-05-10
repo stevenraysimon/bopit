@@ -42,7 +42,10 @@ $layout-breakpoint-small: 700px;
 body{
     background-color: black;
     background-image: linear-gradient(to bottom right, rgb(2, 1, 16), rgb(64, 76, 93));
+    background-repeat: no-repeat;
     font-family: $font;
+    height: 100vh;
+    min-height: 850px;
 }
 
 .wrapper{
