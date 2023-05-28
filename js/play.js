@@ -300,6 +300,9 @@ document.addEventListener("DOMContentLoaded", () => {
         //Playing
         console.log('Playing');
 
+        //Scroll to top
+        window.scrollTo(0, 0);
+
         //Open the input field
         //Set keypress to return false
 
