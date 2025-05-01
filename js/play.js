@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             //Set speed and play
             if (document.getElementById('easy').checked) {
-                setTimeShowTime = 8;
+                setTimeShowTime = 5;
                 if (isMobile) {
                     setTimeShowTime = setTimeShowTime * 2;
                 }
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 playing = true;
                 playGame();
             } else if (document.getElementById('hard').checked) {
-                setTimeShowTime = 3;
+                setTimeShowTime = 5;
                 if (isMobile) {
                     setTimeShowTime = setTimeShowTime * 2;
                 }
