@@ -72,13 +72,13 @@ document.addEventListener("DOMContentLoaded", () => {
     modals();
 
     //Handle stop of mobile audio
-    var handleBeatLoop = function() {
+    var handleBeatLoop = function () {
         if (this.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
             this.currentTime = mobileSpriteData.beat.start;
             this.play();
         }
     };
-    var handleMatchStop = function() {
+    var handleMatchStop = function () {
         if (this.currentTime >= mobileSpriteData.match.start + mobileSpriteData.match.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleMatchOneStop = function() {
+    var handleMatchOneStop = function () {
         if (this.currentTime >= mobileSpriteData.match1.start + mobileSpriteData.match1.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleMatchTwoStop = function() {
+    var handleMatchTwoStop = function () {
         if (this.currentTime >= mobileSpriteData.match2.start + mobileSpriteData.match2.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleMatchThreeStop = function() {
+    var handleMatchThreeStop = function () {
         if (this.currentTime >= mobileSpriteData.match3.start + mobileSpriteData.match3.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleMatchFourStop = function() {
+    var handleMatchFourStop = function () {
         if (this.currentTime >= mobileSpriteData.match4.start + mobileSpriteData.match4.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -118,7 +118,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleMatchFiveStop = function() {
+    var handleMatchFiveStop = function () {
         if (this.currentTime >= mobileSpriteData.match5.start + mobileSpriteData.match5.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -126,37 +126,37 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
         }
     };
-    var handleLoseOneStop = function() {
+    var handleLoseOneStop = function () {
         if (this.currentTime >= mobileSpriteData.lose1.start + mobileSpriteData.lose1.length) {
             this.pause();
         }
     };
-    var handleLoseTwoStop = function() {
+    var handleLoseTwoStop = function () {
         if (this.currentTime >= mobileSpriteData.lose2.start + mobileSpriteData.lose2.length) {
             this.pause();
         }
     };
-    var handleLoseThreeStop = function() {
+    var handleLoseThreeStop = function () {
         if (this.currentTime >= mobileSpriteData.lose3.start + mobileSpriteData.lose3.length) {
             this.pause();
         }
     };
-    var handleLoseFourStop = function() {
+    var handleLoseFourStop = function () {
         if (this.currentTime >= mobileSpriteData.lose4.start + mobileSpriteData.lose5.length) {
             this.pause();
         }
     };
-    var handleLoseFiveStop = function() {
+    var handleLoseFiveStop = function () {
         if (this.currentTime >= mobileSpriteData.lose5.start + mobileSpriteData.lose5.length) {
             this.pause();
         }
     };
 
     //Check if on a mobile device
-    if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)){
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
         //mobile device
         isMobile = true;
-      }else{
+    } else {
         //not mobile device
         isMobile = false;
     }
@@ -165,8 +165,8 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.playPause').setAttribute('id', 'playPause');
     let playing = false;
 
-    document.querySelector('.playPause').addEventListener('click', function(){
-        if (playing === false){
+    document.querySelector('.playPause').addEventListener('click', function () {
+        if (playing === false) {
 
             document.getElementById('playPause').classList.add('playing');
             document.getElementById('play').classList.remove('fa-play')
@@ -174,10 +174,10 @@ document.addEventListener("DOMContentLoaded", () => {
             playing = true;
             //Reset input
             document.getElementById('input').value = '';
-            document.getElementById('input').placeholder='Get Ready...';
+            document.getElementById('input').placeholder = 'Get Ready...';
             playGame();
 
-        } else{
+        } else {
 
             document.getElementById('playPause').classList.remove('playing');
             document.getElementById('play').classList.remove('fa-stop')
@@ -188,10 +188,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });//click playPause
 
-    function modals(){
+    function modals() {
 
         //Level selected and hide modal
-        document.getElementById('submit').addEventListener('click', function(){
+        document.getElementById('submit').addEventListener('click', function () {
             //Reset score
             score = 0;
 
@@ -205,30 +205,30 @@ document.addEventListener("DOMContentLoaded", () => {
             updateScale();
 
             //Set speed and play
-            if(document.getElementById('easy').checked){
+            if (document.getElementById('easy').checked) {
                 setTimeShowTime = 8;
-                if(isMobile){
-                    setTimeShowTime = setTimeShowTime*2;
+                if (isMobile) {
+                    setTimeShowTime = setTimeShowTime * 2;
                 }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
-            } else if(document.getElementById('medium').checked){
+            } else if (document.getElementById('medium').checked) {
                 setTimeShowTime = 5;
-                if(isMobile){
-                    setTimeShowTime = setTimeShowTime*2;
+                if (isMobile) {
+                    setTimeShowTime = setTimeShowTime * 2;
                 }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
-            } else if(document.getElementById('hard').checked){
+            } else if (document.getElementById('hard').checked) {
                 setTimeShowTime = 3;
-                if(isMobile){
-                    setTimeShowTime = setTimeShowTime*2;
+                if (isMobile) {
+                    setTimeShowTime = setTimeShowTime * 2;
                 }
                 document.getElementById('playPause').classList.add('playing');
                 document.getElementById('play').classList.remove('fa-play')
@@ -239,28 +239,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    function getRandomWord(){
+    function getRandomWord() {
+        // Define the difficulty filters based on current difficulty level
+        let filteredWords = dictionary;
 
-        //Get a random number for dictionary.js
-        let randomWord = dictionary[Math.floor(Math.random() * dictionary.length)];
+        // Filter the dictionary based on the selected difficulty
+        if (document.getElementById('easy').checked) {
+            // Easy: words with 7 or fewer characters
+            filteredWords = dictionary.filter(word => word.length <= 7);
+        } else if (document.getElementById('medium').checked) {
+            // Medium: words with 10 or fewer characters
+            filteredWords = dictionary.filter(word => word.length <= 10);
+        } else if (document.getElementById('hard').checked) {
+            // Hard: words with 7 or more characters
+            filteredWords = dictionary.filter(word => word.length >= 7);
+        }
+
+        // If no words match the filter criteria, use the full dictionary
+        // This is a fallback to prevent potential errors
+        if (filteredWords.length === 0) {
+            filteredWords = dictionary;
+        }
+
+        // Get a random word from the filtered list
+        let randomWord = filteredWords[Math.floor(Math.random() * filteredWords.length)];
         return randomWord;
-
-    }//getRandomWord
+    }
 
     //Game
-    function playGame(){
+    function playGame() {
 
         var setWord = getRandomWord();
 
 
         //Set a new word to be the placeholder
-        document.getElementById('input').placeholder= setWord;
+        document.getElementById('input').placeholder = setWord;
         //Show word
         document.getElementById('word').innerHTML = setWord;
         document.getElementById('wordMobile').innerHTML = setWord;
 
         //Play beat
-        if(isMobile){
+        if (isMobile) {
             mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
             mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
             mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
@@ -275,7 +294,7 @@ document.addEventListener("DOMContentLoaded", () => {
             mobileSprite.currentTime = mobileSpriteData.beat.start;
             mobileSprite.play();
             mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
-        }else{
+        } else {
             document.getElementById("beat").play();
             document.getElementById("beat").loop = true;
         }
@@ -289,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("score2").innerHTML = score;
 
         //Catch lose sound choice
-        loseSound = document.getElementById('lose'+ randomInt(1, 5));
+        loseSound = document.getElementById('lose' + randomInt(1, 5));
         var mobileRandomLose = randomInt(1, 5);
 
         //Get score sound
@@ -307,7 +326,7 @@ document.addEventListener("DOMContentLoaded", () => {
         //Set keypress to return false
 
         //Check game status
-        if (playing == true){
+        if (playing == true) {
 
             //Run game loop
             gameLoop = setInterval(() => {
@@ -316,45 +335,45 @@ document.addEventListener("DOMContentLoaded", () => {
                 setWord = getRandomWord();
 
                 document.getElementById("timer").innerHTML = timeShowTime;
-                if (timeShowTime == 0){
-                    
-                    if(document.getElementById('input').placeholder === document.getElementById('input').value){
+                if (timeShowTime == 0) {
+
+                    if (document.getElementById('input').placeholder === document.getElementById('input').value) {
 
                         //If Win ********************************************
                         //Play a sound when they match
                         var mobileRandomMatch = randomInt(1, 6);
-                        if(isMobile){
+                        if (isMobile) {
                             //Play audio sprite 
                             mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
 
                             //random
-                            if(mobileRandomMatch == 1){
+                            if (mobileRandomMatch == 1) {
                                 mobileSprite.currentTime = mobileSpriteData.match.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchStop, false);
-                            } else if (mobileRandomMatch == 2){
+                            } else if (mobileRandomMatch == 2) {
                                 mobileSprite.currentTime = mobileSpriteData.match1.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchOneStop, false);
-                            } else if (mobileRandomMatch == 3){
+                            } else if (mobileRandomMatch == 3) {
                                 mobileSprite.currentTime = mobileSpriteData.match2.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchTwoStop, false);
-                            } else if (mobileRandomMatch == 4){
+                            } else if (mobileRandomMatch == 4) {
                                 mobileSprite.currentTime = mobileSpriteData.match3.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchThreeStop, false);
-                            } else if (mobileRandomMatch == 5){
+                            } else if (mobileRandomMatch == 5) {
                                 mobileSprite.currentTime = mobileSpriteData.match4.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchFourStop, false);
-                            } else if (mobileRandomMatch == 6){
+                            } else if (mobileRandomMatch == 6) {
                                 mobileSprite.currentTime = mobileSpriteData.match5.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleMatchFiveStop, false);
                             }
-                        }else{
-                            matchSound = document.getElementById('match'+ randomInt(1, 6));
+                        } else {
+                            matchSound = document.getElementById('match' + randomInt(1, 6));
                             matchSound.play();
                         }
 
@@ -362,7 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         timeShowTime = setTimeShowTime;
                         score++;
                         //Set a new word to be the placeholder
-                        document.getElementById('input').placeholder= setWord;
+                        document.getElementById('input').placeholder = setWord;
                         //Show word
                         document.getElementById('word').innerHTML = setWord;
                         document.getElementById('wordMobile').innerHTML = setWord;
@@ -371,7 +390,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById("score2").innerHTML = score;
                         //Clear input
                         document.getElementById('input').value = '';
-                    } else{
+                    } else {
                         //If Lose ********************************************
                         console.log('Stopped');
                         document.getElementById("beat").pause();
@@ -385,61 +404,61 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById('submit').setAttribute('disabled', 'true');
 
                         //Play lose sound
-                        if(isMobile){
+                        if (isMobile) {
                             //Play audio sprite
                             mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
-                            if(mobileRandomLose == 1){
+                            if (mobileRandomLose == 1) {
                                 mobileSprite.currentTime = mobileSpriteData.lose1.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleLoseOneStop, false);
-                            } else if (mobileRandomLose == 2){
+                            } else if (mobileRandomLose == 2) {
                                 mobileSprite.currentTime = mobileSpriteData.lose2.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleLoseTwoStop, false);
-                            } else if (mobileRandomLose == 3){
+                            } else if (mobileRandomLose == 3) {
                                 mobileSprite.currentTime = mobileSpriteData.lose3.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleLoseThreeStop, false);
-                            } else if (mobileRandomLose == 4){
+                            } else if (mobileRandomLose == 4) {
                                 mobileSprite.currentTime = mobileSpriteData.lose4.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleLoseFourStop, false);
-                            } else if (mobileRandomLose == 5){
+                            } else if (mobileRandomLose == 5) {
                                 mobileSprite.currentTime = mobileSpriteData.lose5.start;
                                 mobileSprite.play();
                                 mobileSprite.addEventListener('timeupdate', handleLoseFiveStop, false);
-                            } 
-                            
+                            }
+
                             //Disable play button
                             document.getElementById('submit').removeAttribute('disabled', 'true');
                             //Reset input
                             document.getElementById('input').value = '';
-                            document.getElementById('input').placeholder='Try Again';
-                        }else{
+                            document.getElementById('input').placeholder = 'Try Again';
+                        } else {
                             loseSound.play();
                         }
-                        loseSound.addEventListener("ended", function(){
+                        loseSound.addEventListener("ended", function () {
                             //Reset input
                             document.getElementById('input').value = '';
-                            document.getElementById('input').placeholder='Try Again';
+                            document.getElementById('input').placeholder = 'Try Again';
 
-                            if(score > 0){
+                            if (score > 0) {
                                 scoreSound.play();
-                                scoreSound.addEventListener("ended", function(){
+                                scoreSound.addEventListener("ended", function () {
                                     //Score sound ends
                                     setInterval(() => {
-                                        if(s < score){
+                                        if (s < score) {
                                             scoreBang.play();
                                             s++;
                                         }
-                                        if(s === score){
+                                        if (s === score) {
                                             //Disable play button
                                             document.getElementById('submit').removeAttribute('disabled', 'true');
                                             s++;
                                         }
                                     }, 800);
                                 });
-                            } else{
+                            } else {
                                 //Disable play button
                                 document.getElementById('submit').removeAttribute('disabled', 'true');
                             }
@@ -461,14 +480,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         //Disable the input field
                         //Set keypress to return true
                     }
-                } else{
+                } else {
                     timeShowTime--;
                 }
             }, 500);
 
             //requestAnimationFrame(play);
 
-        } else{
+        } else {
             //If Stopped ********************************************
 
             //cancelAnimationFrame(play);
@@ -485,7 +504,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.querySelector('.modal').style.display = 'flex';
 
             //Reset a new word to be the placeholder
-            document.getElementById('input').placeholder='Get Ready...'; 
+            document.getElementById('input').placeholder = 'Get Ready...';
             document.getElementById('input').value = '';
 
             //Clear loop
@@ -497,18 +516,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }//playGame
 
     //Set up ids
-    function setIds(){
+    function setIds() {
         var keys = document.getElementsByClassName("key");
         var mobileKeys = document.getElementsByClassName("keyboard__key");
 
         //Desktop
         for (var i = 0; i < keys.length; i++) {
-            if(keys.item(i).getAttribute('id') === null){
-                if(keys.item(i).querySelectorAll('div')[1]){
+            if (keys.item(i).getAttribute('id') === null) {
+                if (keys.item(i).querySelectorAll('div')[1]) {
                     keys.item(i).setAttribute('id', keys.item(i).querySelectorAll('div')[1].innerHTML);
-                } else if(keys.item(i).querySelectorAll('div')[0]){
+                } else if (keys.item(i).querySelectorAll('div')[0]) {
                     keys.item(i).setAttribute('id', keys.item(i).querySelectorAll('div')[0].innerHTML);
-                } else{
+                } else {
                     keys.item(i).setAttribute('id', keys.item(i).innerHTML);
                 }
             }
@@ -516,12 +535,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Mobile
         for (var j = 0; j < mobileKeys.length; j++) {
-            if(mobileKeys.item(j).getAttribute('id') === null){
-                if(mobileKeys.item(j).querySelectorAll('div')[1]){
+            if (mobileKeys.item(j).getAttribute('id') === null) {
+                if (mobileKeys.item(j).querySelectorAll('div')[1]) {
                     mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).querySelectorAll('div')[1].innerHTML);
-                } else if(mobileKeys.item(j).querySelectorAll('div')[0]){
+                } else if (mobileKeys.item(j).querySelectorAll('div')[0]) {
                     mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).querySelectorAll('div')[0].innerHTML);
-                } else{
+                } else {
                     mobileKeys.item(j).setAttribute('id', mobileKeys.item(j).innerHTML);
                 }
             }
@@ -543,8 +562,8 @@ document.addEventListener("DOMContentLoaded", () => {
         //Keyboard Lights
         document.getElementById(`${name}`).classList.add('keyPressed');
 
-        if (name != 'capslock'){
-            setTimeout(function(){
+        if (name != 'capslock') {
+            setTimeout(function () {
                 document.getElementById(`${name}`).classList.remove('keyPressed');
             }, 100);
         }
@@ -556,31 +575,31 @@ document.addEventListener("DOMContentLoaded", () => {
     }, false);
 
     //Backspace
-    document.addEventListener("keydown", function(event){
+    document.addEventListener("keydown", function (event) {
         const key = event.key;
         var getInput = document.getElementById('input').value;
 
         if (key === "Backspace") {
             document.getElementById('backspace').classList.add('keyPressed');
             document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
-            setTimeout(function(){
+            setTimeout(function () {
                 document.getElementById('backspace').classList.remove('keyPressed');
             }, 100);
             return false;
         }
 
-        if(key === "Enter"){
+        if (key === "Enter") {
             event.preventDefault();
         }
-    
+
     });
 
     //Check if caps is on
-    function checkCaps(){
-        if(caps === true){
+    function checkCaps() {
+        if (caps === true) {
             document.getElementById('capslock').style.backgroundColor = '#e9e9e9';
             caps = false;
-        }else{
+        } else {
             document.getElementById('capslock').style.backgroundColor = '#38fd95';
             caps = true;
         }
@@ -598,33 +617,33 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //Keyboard light up
-    function keyLight(){
+    function keyLight() {
         var input = this.id;
 
-        if(input == 'capslock'){
+        if (input == 'capslock') {
             input = '';
             checkCaps();
         }
 
         //Catch caps lock
-        if(caps == true){
+        if (caps == true) {
             input = input.toUpperCase();
-        } else{
+        } else {
             input = input.toLowerCase();
         }
 
         //Catch input
-        if(input == 'backspace' || input == 'mobilebackspace'){
+        if (input == 'backspace' || input == 'mobilebackspace') {
             var getInput = document.getElementById('input').value;
             document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
-        } else{
-            document.getElementById('input').value += input; 
+        } else {
+            document.getElementById('input').value += input;
         }
     }
 
     function randomInt(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
-      
+
 
 });//doc ready
