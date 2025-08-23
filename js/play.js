@@ -186,6 +186,7 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('play').classList.remove('fa-stop')
             document.getElementById('play').classList.add('fa-play');
             playing = false;
+            handleGameEnd();
             playGame();
 
         }
@@ -652,10 +653,11 @@ document.addEventListener("DOMContentLoaded", () => {
         return Math.floor(Math.random() * (max - min + 1) + min)
     }
 
-    // Mobile Keyboard Functions - Add these before the closing });//doc ready
-
-    // Add this function inside your DOMContentLoaded event listener, after the modals() call
+    // Fix 1: Only show toggle on mobile devices
     function initMobileKeyboard() {
+        // Only show toggle on mobile devices
+        if (!isMobile) return;
+        
         // Create hidden input for triggering device keyboard
         hiddenInput = document.createElement('input');
         hiddenInput.type = 'text';
@@ -667,6 +669,8 @@ document.addEventListener("DOMContentLoaded", () => {
         hiddenInput.autocorrect = 'off';
         hiddenInput.autocapitalize = 'off';
         hiddenInput.spellcheck = false;
+        // Make it readonly to prevent text selection but allow focus
+        hiddenInput.readOnly = true;
         document.body.appendChild(hiddenInput);
 
         // Add toggle button to the level selection modal
@@ -693,6 +697,80 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    // Fix 2: Better iOS Safari keyboard triggering
+    function setupDeviceKeyboard() {
+        if (!isMobile || !mobileKeyboardEnabled) return;
+        
+        // For iOS Safari, we need to trigger focus from a user interaction
+        // and use a different approach
+        hiddenInput.style.position = 'fixed';
+        hiddenInput.style.top = '0px';
+        hiddenInput.style.left = '0px';
+        hiddenInput.style.width = '1px';
+        hiddenInput.style.height = '1px';
+        hiddenInput.style.opacity = '0.01'; // Very low but not 0 for iOS
+        hiddenInput.style.zIndex = '-1';
+        hiddenInput.readOnly = false; // Allow input
+        
+        // Focus the input to trigger keyboard
+        hiddenInput.focus();
+        
+        // Add input event listeners
+        hiddenInput.addEventListener('input', handleDeviceKeyboardInput);
+        hiddenInput.addEventListener('keydown', handleDeviceKeyboardSpecial);
+        
+        // For iOS, we need to maintain focus differently
+        document.addEventListener('touchstart', maintainKeyboardFocus, { passive: true });
+        
+        // Dim the visual mobile keyboard
+        var mobileKeyboard = document.getElementById('keyboard-mobile');
+        if (mobileKeyboard) {
+            mobileKeyboard.classList.add('device-keyboard-active');
+        }
+    }
+
+    // Fix 3: Improved focus maintenance for iOS
+    function maintainKeyboardFocus(e) {
+        if (!mobileKeyboardEnabled || !playing || !hiddenInput) return;
+        
+        // Don't interfere if user is tapping the visual keyboard
+        if (e.target && e.target.classList.contains('keyboard__key')) {
+            return;
+        }
+        
+        // Maintain focus on hidden input
+        setTimeout(function() {
+            if (hiddenInput && playing && mobileKeyboardEnabled) {
+                hiddenInput.focus();
+            }
+        }, 100);
+    }
+
+    // Fix 4: Better cleanup function
+    function teardownDeviceKeyboard() {
+        if (!hiddenInput) return;
+        
+        // Blur the input to hide keyboard
+        hiddenInput.blur();
+        
+        // Remove event listeners
+        hiddenInput.removeEventListener('input', handleDeviceKeyboardInput);
+        hiddenInput.removeEventListener('keydown', handleDeviceKeyboardSpecial);
+        document.removeEventListener('touchstart', maintainKeyboardFocus);
+        
+        // Reset hidden input position
+        hiddenInput.style.position = 'absolute';
+        hiddenInput.style.left = '-9999px';
+        hiddenInput.style.opacity = '0';
+        hiddenInput.readOnly = true;
+        
+        // Restore visual mobile keyboard
+        var mobileKeyboard = document.getElementById('keyboard-mobile');
+        if (mobileKeyboard) {
+            mobileKeyboard.classList.remove('device-keyboard-active');
+        }
+    }
+
     // Handle mobile keyboard toggle
     function handleMobileKeyboardToggle(e) {
         mobileKeyboardEnabled = e.target.checked;
@@ -703,39 +781,6 @@ document.addEventListener("DOMContentLoaded", () => {
         } else if (!mobileKeyboardEnabled) {
             teardownDeviceKeyboard();
         }
-    }
-
-    // Setup device keyboard input handling
-    function setupDeviceKeyboard() {
-        if (!isMobile) return; // Only on mobile devices
-        
-        // Focus hidden input to trigger keyboard
-        hiddenInput.focus();
-        
-        // Add input event listeners
-        hiddenInput.addEventListener('input', handleDeviceKeyboardInput);
-        hiddenInput.addEventListener('keydown', handleDeviceKeyboardSpecial);
-        
-        // Keep focus on hidden input during game
-        document.addEventListener('touchstart', maintainKeyboardFocus);
-        
-        // Optionally dim the visual mobile keyboard
-        var mobileKeyboard = document.getElementById('keyboard-mobile');
-        mobileKeyboard.classList.add('device-keyboard-active');
-    }
-
-    // Remove device keyboard setup
-    function teardownDeviceKeyboard() {
-        if (!hiddenInput) return;
-        
-        hiddenInput.blur();
-        hiddenInput.removeEventListener('input', handleDeviceKeyboardInput);
-        hiddenInput.removeEventListener('keydown', handleDeviceKeyboardSpecial);
-        document.removeEventListener('touchstart', maintainKeyboardFocus);
-        
-        // Restore visual mobile keyboard
-        var mobileKeyboard = document.getElementById('keyboard-mobile');
-        mobileKeyboard.classList.remove('device-keyboard-active');
     }
 
     // Handle regular character input from device keyboard
@@ -762,48 +807,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Handle special keys (backspace, etc.) from device keyboard
     function handleDeviceKeyboardSpecial(e) {
-        if (!mobileKeyboardEnabled || !playing) return;
-        
-        if (e.key === 'Backspace') {
-            e.preventDefault();
-            // Handle backspace (matches your existing logic)
-            var getInput = document.getElementById('input').value;
-            document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
-        }
-        
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            // Prevent default enter behavior
-        }
+            if (!mobileKeyboardEnabled || !playing) return;
+            
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                // Handle backspace (matches your existing logic)
+                var getInput = document.getElementById('input').value;
+                document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
+            }
+            
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                // Prevent default enter behavior
+            }
     }
 
-    // Keep focus on hidden input during gameplay
-    function maintainKeyboardFocus(e) {
-        if (!mobileKeyboardEnabled || !playing) return;
-        
-        // Only maintain focus during active gameplay
-        if (playing) {
-            setTimeout(function() {
-                if (hiddenInput) {
-                    hiddenInput.focus();
-                }
-            }, 0);
-        }
-    }
-
-    // Modify your existing game start function
-    function setupKeyboardForGame() {
-        if (mobileKeyboardEnabled && isMobile) {
-            setTimeout(function() {
-                setupDeviceKeyboard();
-            }, 100); // Small delay to ensure game UI is ready
-        }
-    }
-
-    // Modify your existing playGame function to handle keyboard state
+    // Fix 6: Also add mobile audio cleanup to handleGameEnd
     function handleGameEnd() {
         if (mobileKeyboardEnabled) {
             teardownDeviceKeyboard();
+        }
+        
+        // Add mobile audio cleanup
+        if (isMobile && mobileSprite) {
+            mobileSprite.pause();
+            mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
         }
     }
 
