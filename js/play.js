@@ -5,6 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
     var gameLoop, score, loseSound, matchSound, scoreSound, scoreBang;
     var setTimeShowTime = 1;
     var isMobile;
+    var mobileKeyboardEnabled = false;
+    var hiddenInput = null;
 
     //Get mobile audio
     var mobileSprite = document.getElementById('mobileSprite');
@@ -70,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Run modal
     modals();
+    initMobileKeyboard();
 
     //Handle stop of mobile audio
     var handleBeatLoop = function () {
@@ -163,7 +166,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Play and pause
     document.querySelector('.playPause').setAttribute('id', 'playPause');
-    let playing = false;
+    var playing = false;
 
     document.querySelector('.playPause').addEventListener('click', function () {
         if (playing === false) {
@@ -215,6 +218,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
+                setupKeyboardForGame();
             } else if (document.getElementById('medium').checked) {
                 setTimeShowTime = 5;
                 if (isMobile) {
@@ -225,6 +229,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
+                setupKeyboardForGame();
             } else if (document.getElementById('hard').checked) {
                 setTimeShowTime = 5;
                 if (isMobile) {
@@ -235,6 +240,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.getElementById('play').classList.add('fa-stop');
                 playing = true;
                 playGame();
+                setupKeyboardForGame();
             }
         });
     }
@@ -392,6 +398,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         document.getElementById('input').value = '';
                     } else {
                         //If Lose ********************************************
+                        handleGameEnd();
                         console.log('Stopped');
                         document.getElementById("beat").pause();
                         document.getElementById("beat").currentTime = 0;
@@ -643,6 +650,161 @@ document.addEventListener("DOMContentLoaded", () => {
 
     function randomInt(min, max) { // min and max included 
         return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+
+    // Mobile Keyboard Functions - Add these before the closing });//doc ready
+
+    // Add this function inside your DOMContentLoaded event listener, after the modals() call
+    function initMobileKeyboard() {
+        // Create hidden input for triggering device keyboard
+        hiddenInput = document.createElement('input');
+        hiddenInput.type = 'text';
+        hiddenInput.style.position = 'absolute';
+        hiddenInput.style.left = '-9999px';
+        hiddenInput.style.opacity = '0';
+        hiddenInput.style.pointerEvents = 'none';
+        hiddenInput.autocomplete = 'off';
+        hiddenInput.autocorrect = 'off';
+        hiddenInput.autocapitalize = 'off';
+        hiddenInput.spellcheck = false;
+        document.body.appendChild(hiddenInput);
+
+        // Add toggle button to the level selection modal
+        var levelDiv = document.querySelector('.level form');
+        var toggleHTML = `
+            <div class="mobile-keyboard-toggle">
+                <label>
+                    <input type="checkbox" id="mobileKeyboardToggle">
+                    <span>📱 Use Device Keyboard</span>
+                </label>
+            </div>
+        `;
+        levelDiv.insertAdjacentHTML('beforeend', toggleHTML);
+
+        // Handle toggle changes
+        var toggle = document.getElementById('mobileKeyboardToggle');
+        toggle.addEventListener('change', handleMobileKeyboardToggle);
+
+        // Load saved preference
+        var savedPreference = localStorage.getItem('mobileKeyboardEnabled');
+        if (savedPreference === 'true') {
+            toggle.checked = true;
+            mobileKeyboardEnabled = true;
+        }
+    }
+
+    // Handle mobile keyboard toggle
+    function handleMobileKeyboardToggle(e) {
+        mobileKeyboardEnabled = e.target.checked;
+        localStorage.setItem('mobileKeyboardEnabled', mobileKeyboardEnabled);
+        
+        if (mobileKeyboardEnabled && playing) {
+            setupDeviceKeyboard();
+        } else if (!mobileKeyboardEnabled) {
+            teardownDeviceKeyboard();
+        }
+    }
+
+    // Setup device keyboard input handling
+    function setupDeviceKeyboard() {
+        if (!isMobile) return; // Only on mobile devices
+        
+        // Focus hidden input to trigger keyboard
+        hiddenInput.focus();
+        
+        // Add input event listeners
+        hiddenInput.addEventListener('input', handleDeviceKeyboardInput);
+        hiddenInput.addEventListener('keydown', handleDeviceKeyboardSpecial);
+        
+        // Keep focus on hidden input during game
+        document.addEventListener('touchstart', maintainKeyboardFocus);
+        
+        // Optionally dim the visual mobile keyboard
+        var mobileKeyboard = document.getElementById('keyboard-mobile');
+        mobileKeyboard.classList.add('device-keyboard-active');
+    }
+
+    // Remove device keyboard setup
+    function teardownDeviceKeyboard() {
+        if (!hiddenInput) return;
+        
+        hiddenInput.blur();
+        hiddenInput.removeEventListener('input', handleDeviceKeyboardInput);
+        hiddenInput.removeEventListener('keydown', handleDeviceKeyboardSpecial);
+        document.removeEventListener('touchstart', maintainKeyboardFocus);
+        
+        // Restore visual mobile keyboard
+        var mobileKeyboard = document.getElementById('keyboard-mobile');
+        mobileKeyboard.classList.remove('device-keyboard-active');
+    }
+
+    // Handle regular character input from device keyboard
+    function handleDeviceKeyboardInput(e) {
+        if (!mobileKeyboardEnabled || !playing) return;
+        
+        var inputChar = e.data;
+        if (inputChar && inputChar.match(/[a-zA-Z]/)) {
+            // Add to your game input (same as your existing keyLight function logic)
+            var processedChar = inputChar;
+            if (caps == true) {
+                processedChar = processedChar.toUpperCase();
+            } else {
+                processedChar = processedChar.toLowerCase();
+            }
+            
+            // Add to input field (matches your existing logic)
+            document.getElementById('input').value += processedChar;
+        }
+        
+        // Clear the hidden input to prevent it from filling up
+        hiddenInput.value = '';
+    }
+
+    // Handle special keys (backspace, etc.) from device keyboard
+    function handleDeviceKeyboardSpecial(e) {
+        if (!mobileKeyboardEnabled || !playing) return;
+        
+        if (e.key === 'Backspace') {
+            e.preventDefault();
+            // Handle backspace (matches your existing logic)
+            var getInput = document.getElementById('input').value;
+            document.getElementById('input').value = getInput.substring(0, getInput.length - 1);
+        }
+        
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            // Prevent default enter behavior
+        }
+    }
+
+    // Keep focus on hidden input during gameplay
+    function maintainKeyboardFocus(e) {
+        if (!mobileKeyboardEnabled || !playing) return;
+        
+        // Only maintain focus during active gameplay
+        if (playing) {
+            setTimeout(function() {
+                if (hiddenInput) {
+                    hiddenInput.focus();
+                }
+            }, 0);
+        }
+    }
+
+    // Modify your existing game start function
+    function setupKeyboardForGame() {
+        if (mobileKeyboardEnabled && isMobile) {
+            setTimeout(function() {
+                setupDeviceKeyboard();
+            }, 100); // Small delay to ensure game UI is ready
+        }
+    }
+
+    // Modify your existing playGame function to handle keyboard state
+    function handleGameEnd() {
+        if (mobileKeyboardEnabled) {
+            teardownDeviceKeyboard();
+        }
     }
 
 

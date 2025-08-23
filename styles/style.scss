@@ -447,6 +447,53 @@ header{
     display: flex;
   }
 
+  /* Mobile Keyboard Toggle Styles */
+  .mobile-keyboard-toggle {
+    margin: 15px 0 10px 0;
+    text-align: center;
+    padding: 10px;
+    background: rgba($color-white, 0.1);
+    border-radius: 5px;
+
+    label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+      color: $black;
+      font-family: 'Roboto', sans-serif;
+
+      input[type="checkbox"] {
+        margin: 0;
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  /* Style for when device keyboard is active */
+  #keyboard-mobile.device-keyboard-active {
+    opacity: 0.3;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    position: relative;
+
+    &::after {
+      content: "Device keyboard active";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba($color-black, 0.8);
+      color: $color-white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      pointer-events: none;
+      z-index: 10;
+    }
+  }
+
   /*********** Mobile ***************/
   @media (max-width: $layout-breakpoint-small) {
     .level{
