@@ -447,13 +447,14 @@ header{
     display: flex;
   }
 
-  /* Mobile Keyboard Toggle Styles */
+  /* Mobile Keyboard Toggle - Show only on mobile */
   .mobile-keyboard-toggle {
     margin: 15px 0 10px 0;
     text-align: center;
     padding: 10px;
     background: rgba($color-white, 0.1);
     border-radius: 5px;
+    display: none; // Hidden by default
 
     label {
       display: inline-flex;
@@ -461,13 +462,18 @@ header{
       gap: 8px;
       font-size: 14px;
       cursor: pointer;
-      color: $black;
+      color: $color-white;
       font-family: 'Roboto', sans-serif;
 
       input[type="checkbox"] {
         margin: 0;
         transform: scale(1.2);
       }
+    }
+
+    // Show only on mobile
+    @media (max-width: $layout-breakpoint-small) {
+      display: block;
     }
   }
 

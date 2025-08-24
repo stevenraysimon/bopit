@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var isMobile;
     var mobileKeyboardEnabled = false;
     var hiddenInput = null;
+    var audioStopped = false;
 
     //Get mobile audio
     var mobileSprite = document.getElementById('mobileSprite');
@@ -76,12 +77,15 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Handle stop of mobile audio
     var handleBeatLoop = function () {
-        if (this.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
+        if (audioStopped){
+            return;
+        } else if (this.currentTime >= mobileSpriteData.beat.start + mobileSpriteData.beat.length) {
             this.currentTime = mobileSpriteData.beat.start;
             this.play();
         }
     };
     var handleMatchStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match.start + mobileSpriteData.match.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -90,6 +94,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     var handleMatchOneStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match1.start + mobileSpriteData.match1.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -98,6 +103,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     var handleMatchTwoStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match2.start + mobileSpriteData.match2.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -106,6 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     var handleMatchThreeStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match3.start + mobileSpriteData.match3.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -114,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     var handleMatchFourStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match4.start + mobileSpriteData.match4.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -122,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
     var handleMatchFiveStop = function () {
+        if (audioStopped) return;
         if (this.currentTime >= mobileSpriteData.match5.start + mobileSpriteData.match5.length) {
             this.pause();
             this.currentTime = mobileSpriteData.beat.start;
@@ -168,9 +177,13 @@ document.addEventListener("DOMContentLoaded", () => {
     document.querySelector('.playPause').setAttribute('id', 'playPause');
     var playing = false;
 
-    document.querySelector('.playPause').addEventListener('click', function () {
+    // Support both click and touch events for mobile
+    function handlePlayPauseClick() {
+        console.log('Play/Pause clicked!'); // Debug log
+        
         if (playing === false) {
-
+            console.log('Starting game');
+    
             document.getElementById('playPause').classList.add('playing');
             document.getElementById('play').classList.remove('fa-play')
             document.getElementById('play').classList.add('fa-stop');
@@ -179,18 +192,42 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById('input').value = '';
             document.getElementById('input').placeholder = 'Get Ready...';
             playGame();
-
+    
         } else {
-
+            console.log('Stopping game'); // Debug log
+            audioStopped = true;
+            
+            // Simple stop - just pause and reset to 0
+            if (isMobile && mobileSprite) {
+                console.log('Stopping mobile sprite'); // Debug log
+                mobileSprite.pause();
+                mobileSprite.currentTime = 0;
+            }
+            
+            // Stop desktop audio
+            document.getElementById("beat").pause();
+            document.getElementById("beat").currentTime = 0;
+    
             document.getElementById('playPause').classList.remove('playing');
             document.getElementById('play').classList.remove('fa-stop')
             document.getElementById('play').classList.add('fa-play');
             playing = false;
             handleGameEnd();
             playGame();
-
         }
-    });//click playPause
+    }
+    
+    // Add both click and touch event listeners with debug
+    document.querySelector('.playPause').addEventListener('click', function(e) {
+        console.log('Click event fired');
+        handlePlayPauseClick();
+    });
+    
+    document.querySelector('.playPause').addEventListener('touchstart', function(e) {
+        console.log('Touch event fired');
+        e.preventDefault(); // Prevent click from also firing
+        handlePlayPauseClick();
+    });
 
     function modals() {
 
@@ -275,7 +312,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //Game
     function playGame() {
-
         var setWord = getRandomWord();
 
 
@@ -284,27 +320,6 @@ document.addEventListener("DOMContentLoaded", () => {
         //Show word
         document.getElementById('word').innerHTML = setWord;
         document.getElementById('wordMobile').innerHTML = setWord;
-
-        //Play beat
-        if (isMobile) {
-            mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleMatchThreeStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleMatchFourStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleMatchFiveStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleLoseOneStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleLoseTwoStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleLoseThreeStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleLoseFourStop, false);
-            mobileSprite.removeEventListener('timeupdate', handleLoseFiveStop, false);
-            mobileSprite.currentTime = mobileSpriteData.beat.start;
-            mobileSprite.play();
-            mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
-        } else {
-            document.getElementById("beat").play();
-            document.getElementById("beat").loop = true;
-        }
 
         //Set timer display
         timeShowTime = setTimeShowTime;
@@ -334,6 +349,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         //Check game status
         if (playing == true) {
+            audioStopped = false;
+
+            if (isMobile) {
+                mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleMatchThreeStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleMatchFourStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleMatchFiveStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleLoseOneStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleLoseTwoStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleLoseThreeStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleLoseFourStop, false);
+                mobileSprite.removeEventListener('timeupdate', handleLoseFiveStop, false);
+                mobileSprite.currentTime = mobileSpriteData.beat.start;
+                mobileSprite.play();
+                mobileSprite.addEventListener('timeupdate', handleBeatLoop, false);
+            } else {
+                document.getElementById("beat").play();
+                document.getElementById("beat").loop = true;
+            }
 
             //Run game loop
             gameLoop = setInterval(() => {
@@ -403,6 +439,25 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.log('Stopped');
                         document.getElementById("beat").pause();
                         document.getElementById("beat").currentTime = 0;
+
+                        // Stop mobile audio sprite completely
+                        if (isMobile && mobileSprite) {
+                            mobileSprite.pause();
+                            mobileSprite.currentTime = 0;
+                            // Remove ALL sprite event listeners
+                            mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchThreeStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchFourStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleMatchFiveStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleLoseOneStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleLoseTwoStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleLoseThreeStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleLoseFourStop, false);
+                            mobileSprite.removeEventListener('timeupdate', handleLoseFiveStop, false);
+                        }
 
                         //Show modal
                         document.querySelector('.wrapper').style.display = 'none';
@@ -655,10 +710,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Fix 1: Only show toggle on mobile devices
     function initMobileKeyboard() {
-        // Only show toggle on mobile devices
+        // Only initialize functionality on mobile devices
         if (!isMobile) return;
         
-        // Create hidden input for triggering device keyboard
+        // Create hidden input
         hiddenInput = document.createElement('input');
         hiddenInput.type = 'text';
         hiddenInput.style.position = 'absolute';
@@ -669,26 +724,13 @@ document.addEventListener("DOMContentLoaded", () => {
         hiddenInput.autocorrect = 'off';
         hiddenInput.autocapitalize = 'off';
         hiddenInput.spellcheck = false;
-        // Make it readonly to prevent text selection but allow focus
         hiddenInput.readOnly = true;
         document.body.appendChild(hiddenInput);
-
-        // Add toggle button to the level selection modal
-        var levelDiv = document.querySelector('.level form');
-        var toggleHTML = `
-            <div class="mobile-keyboard-toggle">
-                <label>
-                    <input type="checkbox" id="mobileKeyboardToggle">
-                    <span>📱 Use Device Keyboard</span>
-                </label>
-            </div>
-        `;
-        levelDiv.insertAdjacentHTML('beforeend', toggleHTML);
-
-        // Handle toggle changes
-        var toggle = document.getElementById('mobileKeyboardToggle');
+    
+        // Handle toggle changes - now using the HTML element
+        var toggle = document.getElementById('mobileKeyboardCheckbox');
         toggle.addEventListener('change', handleMobileKeyboardToggle);
-
+    
         // Load saved preference
         var savedPreference = localStorage.getItem('mobileKeyboardEnabled');
         if (savedPreference === 'true') {
@@ -828,10 +870,23 @@ document.addEventListener("DOMContentLoaded", () => {
             teardownDeviceKeyboard();
         }
         
-        // Add mobile audio cleanup
+        // Better mobile audio cleanup
         if (isMobile && mobileSprite) {
             mobileSprite.pause();
+            mobileSprite.currentTime = 0; // Reset to beginning
+            // Remove ALL possible event listeners
             mobileSprite.removeEventListener('timeupdate', handleBeatLoop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchOneStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchTwoStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchThreeStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchFourStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleMatchFiveStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseOneStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseTwoStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseThreeStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseFourStop, false);
+            mobileSprite.removeEventListener('timeupdate', handleLoseFiveStop, false);
         }
     }
 
